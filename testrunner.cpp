@@ -29,7 +29,7 @@ bool TestRunner::exec(QStringList args)
 
         execute = args.size() > 0 ? false : true; // If no argument passed , it should always execute a test object
 
-        foreach (QString arg, args){
+        foreach (QString arg, args) {
 
             if (arg == meta->className()) {
                 params.clear();
