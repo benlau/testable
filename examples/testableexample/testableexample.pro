@@ -31,4 +31,5 @@ HEADERS += \
 
 DISTFILES += \
     README.md \
-    SampleWindow.qml
+    SampleWindow.qml \
+    ../../README.md

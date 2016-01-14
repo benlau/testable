@@ -4,8 +4,8 @@ QT       += testlib quick
 
 HEADERS += \
     $$PWD/testrunner.h \
-    $$PWD/testable.h
+    $$PWD/automator.h
 
 SOURCES += \
     $$PWD/testrunner.cpp \
-    $$PWD/testable.cpp
+    $$PWD/automator.cpp

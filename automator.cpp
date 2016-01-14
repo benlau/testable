@@ -1,25 +1,25 @@
 #include <QQuickWindow>
 #include <QEventLoop>
 #include <QTimer>
-#include "testable.h"
+#include "automator.h"
 
-Testable::Testable(QQmlApplicationEngine* engine)
+Automator::Automator(QQmlApplicationEngine* engine)
 {
     setEngine(engine);
 }
 
 
-QQmlApplicationEngine *Testable::engine() const
+QQmlApplicationEngine *Automator::engine() const
 {
     return m_engine;
 }
 
-void Testable::setEngine(QQmlApplicationEngine *engine)
+void Automator::setEngine(QQmlApplicationEngine *engine)
 {
     m_engine = engine;
 }
 
-void Testable::wait(int timeout) {
+void Automator::wait(int timeout) {
 
     QEventLoop loop;
     QTimer timer;
@@ -30,7 +30,7 @@ void Testable::wait(int timeout) {
 
 }
 
-QObjectList Testable::findChildren(QString objectName)
+QObjectList Automator::findChildren(QString objectName)
 {
     QObjectList result;
     QObject *firstObject = m_engine->rootObjects().first();

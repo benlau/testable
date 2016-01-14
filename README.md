@@ -3,5 +3,5 @@ QML Unit Test Utilities
 
 Classes
 
-1. TestRunner - Multiple test object runner
-2. Testable - Provide a testable interface over QQmlApplicationEngine
+1. TestRunner - Multiple test objects runner
+2. Automator - Automator provides an interface to manipulate UI object loaded by QQmlApplicationEngine

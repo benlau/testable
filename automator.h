@@ -1,16 +1,14 @@
-#ifndef TESTABLE_H
-#define TESTABLE_H
-
+#pragma once
 #include <QObject>
 #include <QQmlApplicationEngine>
 #include <QPointer>
 
-/// Testable is a helper component to provide a testable interface over a QQmlApplicationEngine instance.
+/// Automator provides an interface to manipulate UI object loaded by QQmlApplicationEngine
 
-class Testable
+class Automator
 {
 public:
-    Testable(QQmlApplicationEngine* engine);
+    Automator(QQmlApplicationEngine* engine);
 
     QQmlApplicationEngine *engine() const;
 
@@ -25,4 +23,3 @@ private:
     QPointer<QQmlApplicationEngine> m_engine;
 };
 
-#endif // TESTABLE_H
