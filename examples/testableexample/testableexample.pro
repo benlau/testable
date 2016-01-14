@@ -6,8 +6,6 @@
 
 QT       += testlib
 
-QT       -= gui
-
 TARGET = testable
 CONFIG   += console
 CONFIG   -= app_bundle
@@ -20,6 +18,7 @@ SOURCES += \
     dummytests1.cpp \
     dummytests2.cpp \
     qmltests.cpp
+
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 include (../../testable.pri)

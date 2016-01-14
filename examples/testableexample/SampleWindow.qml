@@ -14,5 +14,21 @@ Window {
         objectName: "DummyItem";
     }
 
+    Repeater {
+        delegate: Item {
+            objectName: "RepeaterItem"
+        }
+
+        model: 5
+    }
+
+    ListView {
+        delegate: Item {
+            objectName: "ListViewItem"
+        }
+
+        model: 3
+    }
+
 }
 

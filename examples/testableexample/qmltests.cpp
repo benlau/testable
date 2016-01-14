@@ -13,16 +13,23 @@ void QmlTests::interactive()
     QQmlApplicationEngine engine;
     engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/SampleWindow.qml"));
 
-    Automator testable(&engine);
+    Automator automator(&engine);
 
-    QObjectList objects = testable.findChildren("DummyItem");
-
-    QCOMPARE(objects.size() , 1);
-
-    objects = testable.findChildren("SampleWindow");
+    QObjectList objects = automator.findObjects("DummyItem");
 
     QCOMPARE(objects.size() , 1);
 
+    objects = automator.findObjects("SampleWindow");
+
+    QCOMPARE(objects.size() , 1);
+
+    objects = automator.findObjects("RepeaterItem");
+
+    QCOMPARE(objects.size() , 5);
+
+    objects = automator.findObjects("ListViewItem");
+
+    QCOMPARE(objects.size() , 3);
 
     Automator::wait(5000);
 }

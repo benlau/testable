@@ -1,6 +1,6 @@
 INCLUDEPATH += $$PWD
 
-QT       += testlib quick
+QT += testlib quick qml qmltest
 
 HEADERS += \
     $$PWD/testrunner.h \

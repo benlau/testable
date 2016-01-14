@@ -16,9 +16,13 @@ public:
 
     static void wait(int timeout);
 
-    QObjectList findChildren(QString objectName);
+    QObject* findObject(QString objectName);
+
+    QObjectList findObjects(QString objectName);
 
 private:
+
+    QObjectList findObjects(QObject* object, QString objectName);
 
     QPointer<QQmlApplicationEngine> m_engine;
 };
