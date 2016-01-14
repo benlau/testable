@@ -1,9 +1,11 @@
 INCLUDEPATH += $$PWD
 
-QT       += testlib
+QT       += testlib quick
 
 HEADERS += \
-    $$PWD/testrunner.h
+    $$PWD/testrunner.h \
+    $$PWD/testable.h
 
 SOURCES += \
-    $$PWD/testrunner.cpp
+    $$PWD/testrunner.cpp \
+    $$PWD/testable.cpp

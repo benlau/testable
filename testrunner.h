@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+/// Multiple test case runner
+
 class TestRunner
 {
 public:
