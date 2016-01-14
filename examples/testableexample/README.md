@@ -1,25 +1,14 @@
 Testable Example
 ================
 
+In this example, it will demonstrate how to use TestRunner class to execute test cases from different QObject.
+User may ask to run specific test object / test case by command line arguments: 
+
 Command Line Arguments
 
     ./testable [testcase ...]
 
 Example:
-
-```
-$ ./testable DummyTests1
-********* Start testing of DummyTests1 *********
-Config: Using QtTest library 5.5.0, Qt 5.5.0 (x86_64-little_endian-lp64 shared (dynamic) release build; by Clang 6.0 (clang-600.0.56) (Apple))
-PASS   : DummyTests1::initTestCase()
-PASS   : DummyTests1::test1()
-PASS   : DummyTests1::test2()
-PASS   : DummyTests1::cleanupTestCase()
-Totals: 4 passed, 0 failed, 0 skipped, 0 blacklisted
-********* Finished testing of DummyTests1 *********
-All test cases passed!
-
-```
 
 ```
 $ ./testable test1
@@ -37,6 +26,21 @@ PASS   : DummyTests2::test1()
 PASS   : DummyTests2::cleanupTestCase()
 Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted
 ********* Finished testing of DummyTests2 *********
+```
+
+
+```
+$ ./testable DummyTests1
+********* Start testing of DummyTests1 *********
+Config: Using QtTest library 5.5.0, Qt 5.5.0 (x86_64-little_endian-lp64 shared (dynamic) release build; by Clang 6.0 (clang-600.0.56) (Apple))
+PASS   : DummyTests1::initTestCase()
+PASS   : DummyTests1::test1()
+PASS   : DummyTests1::test2()
+PASS   : DummyTests1::cleanupTestCase()
+Totals: 4 passed, 0 failed, 0 skipped, 0 blacklisted
+********* Finished testing of DummyTests1 *********
+All test cases passed!
+
 ```
 
 ```
