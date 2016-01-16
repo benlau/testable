@@ -2,6 +2,7 @@ QML Unit Test Utilities
 =======================
 
 Features
+
 1. Support to run tests from mutiple QObject
 2. Run specific test case / test object by command line
 3. Utilities to search QQuickItem from Repeater/Flickable/ListView/GridView
