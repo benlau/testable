@@ -4,8 +4,9 @@ QML Unit Test Utilities
 Features
 
 1. Support to run tests from mutiple QObject
-2. Run specific test case / test object by command line
-3. Utilities to search QQuickItem from Repeater/Flickable/ListView/GridView
+2. Support to run QTest (C++) and Quick Tests (QML) in a single project
+3. Run specific test case / test object by command line
+4. Utilities to search QQuickItem from Repeater/Flickable/ListView/GridView
 
 Classes
 
