@@ -44,6 +44,17 @@ All test cases passed!
 ```
 
 ```
+./testable QuickTests::test_dummy1
+********* Start testing of QuickTests *********
+Config: Using QtTest library 5.5.0, Qt 5.5.0 (x86_64-little_endian-lp64 shared (dynamic) release build; by Clang 6.0 (clang-600.0.56) (Apple))
+PASS   : QuickTests::QuickTests::initTestCase()
+PASS   : QuickTests::QuickTests::test_dummy1()
+PASS   : QuickTests::QuickTests::cleanupTestCase()
+Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted
+********* Finished testing of QuickTests *********
+```
+
+```
 ./testable
 Starting /Users/benlau/src/github/testable/examples/build-testableexample-Desktop_Qt_5_5_0_clang_64bit-Debug/testable...
 ********* Start testing of DummyTests1 *********

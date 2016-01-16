@@ -15,6 +15,9 @@ int main(int argc, char *argv[])
     runner.add<DummyTests2>();
     runner.add<QmlTests>();
 
+    // Add Qt Quick Test
+    runner.add(QString(SRCDIR));
+
     bool error = runner.exec(app.arguments());
 
     if (!error) {

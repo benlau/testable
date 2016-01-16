@@ -9,8 +9,12 @@ class TestRunner
 {
 public:
     TestRunner();
+    ~TestRunner();
 
     void add(QObject* object);
+
+    // Add Qt Quick Tests
+    void add(const QString& path);
 
     template <typename T>
     void add() {
@@ -23,7 +27,16 @@ public:
     int count() const;
 
 private:
-    QObjectList m_testObjects;
+
+    void add(QVariant value);
+
+    // Run QTest
+    bool run(QObject* object, const QStringList& arguments);
+
+    // Run Qt Quick Tests
+    bool run(QString path, const QStringList& arguments);
+
+    QVariantList m_testObjects;
 };
 
 #endif // TESTRUNNER_H

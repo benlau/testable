@@ -31,4 +31,5 @@ HEADERS += \
 DISTFILES += \
     README.md \
     SampleWindow.qml \
-    ../../README.md
+    ../../README.md \
+    tst_quicktests.qml
