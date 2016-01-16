@@ -4,6 +4,9 @@ Testable Example
 In this example, it will demonstrate how to use TestRunner class to execute test cases from different QObject.
 User may ask to run specific test object / test case by command line arguments: 
 
+Remarks: If you want to execute specfic test in Qt Quick Tests,
+you must pass the test case name togather with object name (e.g QuickTests::test_dummy1).
+
 Command Line Arguments
 
     ./testable [testcase ...]
