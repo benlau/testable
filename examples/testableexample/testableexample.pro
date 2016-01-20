@@ -17,7 +17,8 @@ SOURCES += \
     main.cpp \
     dummytests1.cpp \
     dummytests2.cpp \
-    qmltests.cpp
+    qmltests.cpp \
+    benchmarktests.cpp
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
@@ -26,7 +27,8 @@ include (../../testable.pri)
 HEADERS += \
     dummytests1.h \
     dummytests2.h \
-    qmltests.h
+    qmltests.h \
+    benchmarktests.h
 
 DISTFILES += \
     README.md \

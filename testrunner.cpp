@@ -45,7 +45,7 @@ bool TestRunner::exec(QStringList arguments)
         if (object) {
             error |= run(object, arguments);
         } else if (item.type() == QMetaType::QString) {
-            error != run(item.toString(), arguments);
+            error |= run(item.toString(), arguments);
         }
     }
 
@@ -71,13 +71,24 @@ bool TestRunner::run(QObject *object, const QStringList& arguments)
     QStringList params; // params for qTest
     params << executable;
 
+    QStringList tmp;
+
+    // Always add "-*" to params.
+    foreach (QString arg, args) {
+        if (arg.indexOf("-") == 0) {
+            params << arg;
+        } else {
+            tmp << arg;
+        }
+    }
+
+    args = tmp;
+
     execute = args.size() > 0 ? false : true; // If no argument passed , it should always execute a test object
 
     foreach (QString arg, args) {
 
         if (arg == meta->className()) {
-            params.clear();
-            params << executable;
             execute = true;
             break;
         }
