@@ -44,12 +44,17 @@ bool TestRunner::exec(QStringList arguments)
         object = item.value<QObject*>();
         if (object) {
             error |= run(object, arguments);
-        } else if (item.type() == QMetaType::QString) {
+        } else if (item.type() == (int) QMetaType::QString) {
             error |= run(item.toString(), arguments);
         }
     }
 
     return error;
+}
+
+void TestRunner::addImportPath(const QString &path)
+{
+    m_importPaths << path;
 }
 
 int TestRunner::count() const
@@ -118,14 +123,21 @@ bool TestRunner::run(QString path, const QStringList &arguments)
         return false;
     }
 
-    char **s = (char**) malloc(sizeof(char*) * 10 + testcases.size());
+    QStringList paths;
+    paths << path;
+    paths << m_importPaths;
+
+    char **s = (char**) malloc(sizeof(char*) * (10 + testcases.size() + paths.size() * 2));
     int idx = 0;
     s[idx++] = executable.toUtf8().data();
-    s[idx++] = strdup("-import");
-    s[idx++] = path.toUtf8().data();
+
+    foreach (QString p , paths) {
+        s[idx++] = strdup("-import");
+        s[idx++] = strdup(p.toUtf8().data());
+    }
 
     foreach( QString testcase,testcases) {
-        s[idx++] = testcase.toUtf8().data();
+        s[idx++] = strdup(testcase.toUtf8().data());
     }
     s[idx++] = 0;
 

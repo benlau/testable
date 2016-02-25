@@ -9,7 +9,6 @@ Item {
 
     TestCase {
         name: "QuickTests"
-        when: windowShown
 
         function test_dummy1() {
         }

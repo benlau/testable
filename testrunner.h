@@ -11,17 +11,19 @@ public:
     TestRunner();
     ~TestRunner();
 
+    // Add a QObject test suite
     void add(QObject* object);
 
-    // Add Qt Quick Tests
+    // Add Qt Quick test suite
     void add(const QString& path);
 
-    template <typename T>
-    void add() {
-        add(new T());
-    }
+    // Add a QObject test suite
+    template <typename T> void add();
 
     bool exec(QStringList arguments);
+
+    // Add a import path for Qt Quick Test suite
+    void addImportPath(const QString& path);
 
     /// Return no. of test objects added
     int count() const;
@@ -37,6 +39,14 @@ private:
     bool run(QString path, const QStringList& arguments);
 
     QVariantList m_testObjects;
+
+    QStringList m_importPaths;
 };
+
+template <typename T>
+void TestRunner::add()
+{
+    add(new T());
+}
 
 #endif // TESTRUNNER_H

@@ -20,6 +20,8 @@ int main(int argc, char *argv[])
     // Run Qt Quick Test in SRCDIR. It will scan all qml file begin with tst_
     runner.add(QString(SRCDIR));
 
+    runner.addImportPath("qrc:///");
+
     bool error = runner.exec(app.arguments());
 
     if (!error) {
