@@ -142,7 +142,7 @@ bool TestRunner::run(QString path, const QStringList &arguments)
     s[idx++] = 0;
 
     const char *name = "QuickTests";
-    const char *source = SRCDIR;
+    const char *source = strdup(path.toUtf8().data());
 
     bool error = quick_test_main( idx-1, s, name, source);
     free(s);
