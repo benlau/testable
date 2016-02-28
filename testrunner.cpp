@@ -119,6 +119,15 @@ bool TestRunner::run(QString path, const QStringList &arguments)
     QString executable = args.takeAt(0);
     QStringList testcases = arguments.filter(QRegExp("::"));
 
+    QStringList tmp; // Filter all "-" parameter
+    foreach (QString arg, args) {
+        if (arg.indexOf("-") != 0) {
+            tmp << arg;
+        }
+    }
+
+    args = tmp;
+
     if (args.size() !=0 && testcases.size() == 0) {
         return false;
     }
