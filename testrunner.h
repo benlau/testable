@@ -35,6 +35,11 @@ public:
     /// Get the default instance of TestRunner (The first declared TestRunner)
     static TestRunner* defautInstance();
 
+    QVariantMap config() const;
+
+    /// Set config variables that will be passed to QML application via TestRunner singleton object
+    void setConfig(const QVariantMap &config);
+
 private:
 
     void add(QVariant value);
@@ -50,6 +55,8 @@ private:
     QStringList m_importPaths;
 
     QStringList m_arguments;
+
+    QVariantMap m_config;
 };
 
 template <typename T>

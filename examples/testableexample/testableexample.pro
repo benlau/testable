@@ -34,4 +34,5 @@ DISTFILES += \
     README.md \
     SampleWindow.qml \
     ../../README.md \
-    tst_quicktests.qml
+    tst_quicktests.qml \
+    tst_Testable.qml

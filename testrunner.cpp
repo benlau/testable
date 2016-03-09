@@ -9,7 +9,7 @@ static TestRunner *m_defaultInstance = 0;
 
 TestRunner::TestRunner()
 {
-    if (m_defaultInstance!=0) {
+    if (m_defaultInstance == 0) {
         m_defaultInstance = this;
     }
 }
@@ -167,6 +167,16 @@ bool TestRunner::run(QString path, const QStringList &arguments)
     free(s);
 
     return error;
+}
+
+QVariantMap TestRunner::config() const
+{
+    return m_config;
+}
+
+void TestRunner::setConfig(const QVariantMap &config)
+{
+    m_config = config;
 }
 
 QStringList TestRunner::arguments() const

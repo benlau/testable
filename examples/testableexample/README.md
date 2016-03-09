@@ -78,3 +78,8 @@ PASS   : DummyTests2::cleanupTestCase()
 Totals: 3 passed, 1 failed, 0 skipped, 0 blacklisted
 ********* Finished testing of DummyTests2 *********
 ```
+
+Class Reference
+===============
+
+It is not available yet. If you have questions, please feel free to ask.
