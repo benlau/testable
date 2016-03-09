@@ -2,11 +2,16 @@
 #include <QtQuickTest/quicktest.h>
 #include <QMetaObject>
 #include <QMetaMethod>
+#include <QPointer>
 #include "testrunner.h"
+
+static TestRunner *m_defaultInstance = 0;
 
 TestRunner::TestRunner()
 {
-
+    if (m_defaultInstance!=0) {
+        m_defaultInstance = this;
+    }
 }
 
 TestRunner::~TestRunner()
@@ -21,6 +26,10 @@ TestRunner::~TestRunner()
         }
     }
     m_testObjects.clear();
+
+    if (m_defaultInstance == this) {
+        m_defaultInstance = 0;
+    }
 }
 
 void TestRunner::add(QObject *object)
@@ -39,6 +48,7 @@ bool TestRunner::exec(QStringList arguments)
     QObject *object;
     QVariant item;
     bool error = false;
+    m_arguments = arguments;
 
     foreach (item,m_testObjects) {
         object = item.value<QObject*>();
@@ -157,5 +167,15 @@ bool TestRunner::run(QString path, const QStringList &arguments)
     free(s);
 
     return error;
+}
+
+QStringList TestRunner::arguments() const
+{
+    return m_arguments;
+}
+
+TestRunner *TestRunner::defautInstance()
+{
+    return m_defaultInstance;
 }
 
