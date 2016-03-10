@@ -12,6 +12,8 @@ TestRunner::TestRunner()
     if (m_defaultInstance == 0) {
         m_defaultInstance = this;
     }
+
+    m_engineHook = 0;
 }
 
 TestRunner::~TestRunner()
@@ -177,6 +179,18 @@ QVariantMap TestRunner::config() const
 void TestRunner::setConfig(const QVariantMap &config)
 {
     m_config = config;
+}
+
+void TestRunner::execEngineHook(QQmlEngine *engine)
+{
+    if (m_engineHook != 0) {
+        m_engineHook(engine);
+    }
+}
+
+void TestRunner::setEngineHook(TestRunner::Callback func)
+{
+    m_engineHook = func;
 }
 
 QStringList TestRunner::arguments() const

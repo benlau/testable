@@ -3,6 +3,17 @@
 #include <QtQml>
 #include "testrunnerwrapper.h"
 
+class TestRunnerHookHelper : public TestRunner {
+public:
+    virtual void execEngineHook(QQmlEngine* engine);
+};
+
+void TestRunnerHookHelper::execEngineHook(QQmlEngine *engine)
+{
+    TestRunner::execEngineHook(engine);
+}
+
+
 TestRunnerWrapper::TestRunnerWrapper(QObject *parent) : QObject(parent)
 {
 
@@ -30,12 +41,22 @@ QVariantMap TestRunnerWrapper::config() const
     return res;
 }
 
+QString TestRunnerWrapper::prepare(const QString &dummy) const
+{
+    return dummy;
+}
 
 static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(engine);
     Q_UNUSED(scriptEngine);
 
     TestRunnerWrapper* object = new TestRunnerWrapper();
+
+    TestRunner* runner = TestRunner::defautInstance();
+    if (runner) {
+        TestRunnerHookHelper *helper = static_cast<TestRunnerHookHelper*>(runner);
+        helper->execEngineHook(engine);
+    }
 
     return object;
 }
@@ -49,3 +70,4 @@ public:
 };
 
 static TestableTestRunnerWrapperRegistrationHelper registerHelper;
+

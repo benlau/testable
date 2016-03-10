@@ -20,6 +20,19 @@ public:
 
     QVariantMap config() const;
 
+public slots:
+    /// A dummy function to trigger the creation of TestRunnerWrapper by QML Engine
+    /*
+    Example:
+
+     Image {
+        source: TestRunner.prepare("image://custom/xxx.png");
+     }
+
+     Then it will create TestRunner and run the engine hook defined in TestRunner C++ class.
+    */
+    QString prepare(const QString& dummy) const;
+
 signals:
     void argumentsChanged();
 

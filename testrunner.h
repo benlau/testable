@@ -2,7 +2,7 @@
 #define TESTRUNNER_H
 
 #include <QObject>
-
+#include <QQmlEngine>
 /// Multiple test case runner
 
 class TestRunner
@@ -40,8 +40,15 @@ public:
     /// Set config variables that will be passed to QML application via TestRunner singleton object
     void setConfig(const QVariantMap &config);
 
-private:
+    typedef void (*Callback)(QQmlEngine* engine);
 
+    /// Set a callback to be invoked when a QQmlEngine start
+    void setEngineHook(Callback func);
+
+protected:
+    virtual void execEngineHook(QQmlEngine* engine);
+
+private:
     void add(QVariant value);
 
     // Run QTest
@@ -57,6 +64,8 @@ private:
     QStringList m_arguments;
 
     QVariantMap m_config;
+
+    Callback m_engineHook;
 };
 
 template <typename T>
