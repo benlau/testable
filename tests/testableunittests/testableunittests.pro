@@ -15,4 +15,7 @@ SOURCES += main.cpp \
 HEADERS += \
     testableunittests.h
 
+DEFINES += SRCDIR=\\\"$$PWD/\\\"
+
+
 include(../../testable.pri)

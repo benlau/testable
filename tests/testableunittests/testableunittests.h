@@ -12,6 +12,9 @@ public:
 signals:
 
 public slots:
+
+private slots:
+    void resourceGenerator();
 };
 
 #endif // TESTABLEUNITTESTS_H
