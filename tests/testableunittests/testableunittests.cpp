@@ -11,7 +11,8 @@ TestableUnitTests::TestableUnitTests(QObject *parent) : QObject(parent)
 void TestableUnitTests::resourceGenerator()
 {
     ResourceGenerator generator;
-    generator.setRoot(QString(SRCDIR) + "../");
+    QDir dir;
+    generator.setRoot(dir.currentPath());
     generator.scan("/Testable", QString(SRCDIR) + "../testableunittests");
     generator.scan("/Testable2", QString(SRCDIR) + "../testableunittests");
 
