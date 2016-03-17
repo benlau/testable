@@ -43,7 +43,9 @@ void ResourceGenerator::scan(QString prefix, QString path)
         }
     }
 
-    m_files[prefix] = files;
+    QStringList tmp = m_files[prefix];
+    tmp.append(files);
+    m_files[prefix] = tmp;
 
     generateText();
 }
