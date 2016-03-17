@@ -10,13 +10,19 @@ ResourceGenerator::ResourceGenerator()
 {
 }
 
-void ResourceGenerator::scan(QString prefix, QString root, QString path)
+void ResourceGenerator::scan(QString prefix, QString path)
 {
-    m_prefix = prefix;
     QQueue<QString> queue;
     queue.enqueue(path);
-    m_files.clear();
+
+    QString root = m_root;
+
+    if (root.isEmpty()) {
+        root = path;
+    }
+
     QDir rootDir(root);
+    QStringList files;
 
     while (queue.size() > 0) {
 
@@ -32,10 +38,12 @@ void ResourceGenerator::scan(QString prefix, QString root, QString path)
             if (info.isDir()) {
                 queue.enqueue(info.absoluteFilePath());
             } else {
-                m_files << rootDir.relativeFilePath(info.absoluteFilePath());
+                files << rootDir.relativeFilePath(info.absoluteFilePath());
             }
         }
     }
+
+    m_files[prefix] = files;
 
     generateText();
 }
@@ -65,17 +73,35 @@ void ResourceGenerator::generateText()
     QDomElement root = doc.createElement("RCC");
     doc.appendChild(root);
 
-    QDomElement qresource = doc.createElement("qresource");
-    qresource.setAttribute("prefix", m_prefix);
-    root.appendChild(qresource);
+    QMapIterator<QString, QStringList> iter(m_files);
+    while (iter.hasNext()) {
+        iter.next();
 
-    foreach (QString file, m_files) {
-        QDomElement tag = doc.createElement("file");
-        QDomText text = doc.createTextNode(file);
+        QStringList list = iter.value();
+        QString prefix = iter.key();
 
-        tag.appendChild(text);
-        qresource.appendChild(tag);
+        QDomElement qresource = doc.createElement("qresource");
+        root.appendChild(qresource);
+        qresource.setAttribute("prefix", prefix);
+
+        foreach (QString file, list) {
+            QDomElement tag = doc.createElement("file");
+            QDomText text = doc.createTextNode(file);
+
+            tag.appendChild(text);
+            qresource.appendChild(tag);
+        }
     }
 
     m_text = doc.toString(4);
+}
+
+QString ResourceGenerator::root() const
+{
+    return m_root;
+}
+
+void ResourceGenerator::setRoot(const QString &root)
+{
+    m_root = root;
 }
