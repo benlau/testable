@@ -11,7 +11,7 @@ TestableUnitTests::TestableUnitTests(QObject *parent) : QObject(parent)
 void TestableUnitTests::resourceGenerator()
 {
     ResourceGenerator generator;
-    generator.scan("/",QString(SRCDIR) + "../");
+    generator.scan("/",QString(SRCDIR), QString(SRCDIR) + "../");
 
     QVERIFY(!generator.text().isEmpty());
     QVERIFY(generator.save("resource.qrc"));

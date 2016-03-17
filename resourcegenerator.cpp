@@ -10,11 +10,11 @@ ResourceGenerator::ResourceGenerator()
 {
 }
 
-void ResourceGenerator::scan(QString prefix, QString root)
+void ResourceGenerator::scan(QString prefix, QString root, QString path)
 {
     m_prefix = prefix;
     QQueue<QString> queue;
-    queue.enqueue(root);
+    queue.enqueue(path);
     m_files.clear();
     QDir rootDir(root);
 

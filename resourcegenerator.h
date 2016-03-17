@@ -9,7 +9,7 @@ class ResourceGenerator
 public:
     ResourceGenerator();
 
-    void scan(QString prefix, QString path);
+    void scan(QString prefix, QString root, QString path);
 
     QString text() const;
 
