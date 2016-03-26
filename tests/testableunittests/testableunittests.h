@@ -15,6 +15,8 @@ public slots:
 
 private slots:
     void resourceGenerator();
+
+    void automatorSearchWindow();
 };
 
 #endif // TESTABLEUNITTESTS_H

@@ -23,6 +23,22 @@ static bool inherited(QObject* object,QString className) {
     return res;
 }
 
+static QObjectList uniq(const QObjectList& list) {
+
+    QMap<QObject*, bool> map;
+    QObjectList res;
+
+    for (int i = 0 ; i < list.count() ;i++) {
+        QObject* object = list.at(i);
+        if (!map.contains(object)) {
+            res << object;
+            map[object] = true;
+        }
+    }
+
+    return res;
+}
+
 Automator::Automator(QQmlApplicationEngine* engine)
 {
     setEngine(engine);
@@ -215,9 +231,11 @@ QObjectList Automator::findObjects(QObject *object, QString objectName)
             }
         }
 
-    } else if (inherited(object, "QQuickFlickable")) {
+    } else if (inherited(object, "QQuickFlickable") || inherited(object, "QQuickWindow")) {
+
 
         QQuickItem* contentItem = object->property("contentItem").value<QQuickItem*>();
+
         if (contentItem) {
 
             QList<QQuickItem *>items = contentItem->childItems() ;
@@ -229,6 +247,10 @@ QObjectList Automator::findObjects(QObject *object, QString objectName)
                 }
             }
 
+            QObjectList subResult = findObjects(contentItem, objectName);
+            if (subResult.size() > 0) {
+                result.append(subResult);
+            }
         }
     }
 
@@ -242,8 +264,7 @@ QObjectList Automator::findObjects(QObject *object, QString objectName)
         }
     }
 
-    return result;
-
+    return uniq(result);
 }
 
 QQuickWindow *Automator::window()

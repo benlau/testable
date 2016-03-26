@@ -19,3 +19,6 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 
 include(../../testable.pri)
+
+DISTFILES += \
+    window.qml
