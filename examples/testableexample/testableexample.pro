@@ -35,4 +35,5 @@ DISTFILES += \
     SampleWindow.qml \
     ../../README.md \
     tst_quicktests.qml \
-    tst_Testable.qml
+    tst_Testable.qml \
+    ItemWithError.qml

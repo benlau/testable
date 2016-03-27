@@ -7,8 +7,9 @@
 
 /// Automator provides an interface to manipulate UI object loaded by QQmlApplicationEngine
 
-class Automator
+class Automator : public QObject
 {
+    Q_OBJECT
 public:
     Automator(QQmlApplicationEngine* engine);
 
@@ -38,6 +39,13 @@ public:
     // Click on the view directly
     bool click(int interval= 100 ,QPointF = QPointF());
 
+    bool anyError() const;
+
+    void setAnyError(bool anyError);
+
+private slots:
+    void onWarnings(QList<QQmlError>);
+
 private:
 
     QObjectList findObjects(QObject* object, QString objectName);
@@ -45,5 +53,7 @@ private:
     QPointer<QQmlApplicationEngine> m_engine;
 
     QQuickWindow* window();
+
+    bool m_anyError;
 };
 

@@ -34,3 +34,13 @@ void QmlTests::interactive()
     Automator::wait(5000);
 }
 
+void QmlTests::errorWarning()
+{
+    QQmlApplicationEngine engine;
+    Automator automator(&engine);
+
+    engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/ItemWithError.qml"));
+
+    QVERIFY(!automator.anyError());
+}
+

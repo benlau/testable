@@ -39,9 +39,10 @@ static QObjectList uniq(const QObjectList& list) {
     return res;
 }
 
-Automator::Automator(QQmlApplicationEngine* engine)
+Automator::Automator(QQmlApplicationEngine* engine) : QObject()
 {
     setEngine(engine);
+    m_anyError = false;
 }
 
 
@@ -53,6 +54,8 @@ QQmlApplicationEngine *Automator::engine() const
 void Automator::setEngine(QQmlApplicationEngine *engine)
 {
     m_engine = engine;
+    connect(engine,SIGNAL(warnings(QList<QQmlError>)),
+            this,SLOT(onWarnings(QList<QQmlError>)));
 }
 
 void Automator::wait(int timeout) {
@@ -273,4 +276,23 @@ QQuickWindow *Automator::window()
     QQuickWindow *window = qobject_cast<QQuickWindow*>(firstObject);
 
     return window;
+}
+
+bool Automator::anyError() const
+{
+    return m_anyError;
+}
+
+void Automator::setAnyError(bool anyError)
+{
+    m_anyError = anyError;
+}
+
+void Automator::onWarnings(QList<QQmlError> warnings)
+{
+    for (int i = 0 ; i < warnings.size();i++){
+        if (warnings.at(i).toString().indexOf("Error") != -1) {
+            setAnyError(true);
+        }
+    }
 }

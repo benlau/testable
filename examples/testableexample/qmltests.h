@@ -15,6 +15,7 @@ public slots:
 
 private slots:
     void interactive();
+    void errorWarning();
 };
 
 #endif // QMLTESTS_H
