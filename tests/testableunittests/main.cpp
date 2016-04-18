@@ -1,6 +1,6 @@
 #include <QApplication>
 #include <QtCore>
-#include "testrunner.h"
+#include <TestRunner>
 #include "testableunittests.h"
 
 int main(int argc, char *argv[])

@@ -1,9 +1,9 @@
 #include <QtCore>
 #include <QTest>
 #include <QQmlApplicationEngine>
+#include <Automator>
+#include <ResourceGenerator>
 #include "testableunittests.h"
-#include "resourcegenerator.h"
-#include "automator.h"
 
 TestableUnitTests::TestableUnitTests(QObject *parent) : QObject(parent)
 {
