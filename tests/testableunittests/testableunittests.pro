@@ -21,4 +21,7 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 include(../../testable.pri)
 
 DISTFILES += \
-    window.qml
+    window.qml \
+    PackageA/example.js \
+    PackageA/qmldir \
+    PackageA/Store.qml

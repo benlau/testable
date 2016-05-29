@@ -43,6 +43,9 @@ public:
 
     void setAnyError(bool anyError);
 
+    QObject* obtainSingletonObject(QString package, int versionMajor, int versionMinor, QString typeName);
+
+
 private slots:
     void onWarnings(QList<QQmlError>);
 

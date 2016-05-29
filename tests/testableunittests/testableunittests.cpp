@@ -39,3 +39,15 @@ void TestableUnitTests::automatorSearchWindow()
     QCOMPARE(list.count(), 1);
 
 }
+
+void TestableUnitTests::automatorObtainSingletonObject()
+{
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath(QString(SRCDIR));
+    engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/window.qml"));
+
+    Automator automator(&engine);
+    QObject* store = automator.obtainSingletonObject("PackageA",1,0,"Store");
+    QVERIFY(store);
+}

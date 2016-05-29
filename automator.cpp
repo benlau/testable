@@ -288,6 +288,36 @@ void Automator::setAnyError(bool anyError)
     m_anyError = anyError;
 }
 
+QObject* Automator::obtainSingletonObject(QString package, int versionMajor, int versionMinor, QString typeName)
+{
+    /// Modified from QFAppDispatcher::singletonObject() in QuickFlux project
+    QString pattern  = "import QtQuick 2.0\nimport %1 %2.%3;QtObject { property var object : %4 }";
+
+    QString qml = pattern.arg(package).arg(versionMajor).arg(versionMinor).arg(typeName);
+
+    QObject* holder = 0;
+
+    QQmlComponent comp (m_engine.data());
+    comp.setData(qml.toUtf8(),QUrl());
+    holder = comp.create();
+
+    if (!holder) {
+        qWarning() << QString("Testable: Failed to gain singleton object: %1").arg(typeName);
+        qWarning() << QString("Error: ") << comp.errorString();
+        return 0;
+    }
+
+    QObject* object = holder->property("object").value<QObject*>();
+    holder->deleteLater();
+
+    if (!object) {
+        qWarning() << QString("Testable: Failed to gain singleton object: %1").arg(typeName);
+        qWarning() << QString("Error: Unknown");
+    }
+
+    return object;
+}
+
 void Automator::onWarnings(QList<QQmlError> warnings)
 {
     for (int i = 0 ; i < warnings.size();i++){
