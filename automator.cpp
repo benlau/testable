@@ -288,6 +288,35 @@ void Automator::setAnyError(bool anyError)
     m_anyError = anyError;
 }
 
+bool Automator::runTestCase() const
+{
+    QObjectList list = m_engine->rootObjects().first()->findChildren<QObject*>();
+    bool res = true;
+
+    for (int i = 0 ; i < list.size() ; i++) {
+        QObject* object = list.at(i);
+        QString className = object->metaObject()->className();
+
+        if (className.indexOf("TestableCase_QMLTYPE") == 0) {
+            const QMetaObject* meta = object->metaObject();
+            for (int j = 0 ; j < meta->methodCount();j++) {
+                const QMetaMethod method = meta->method(j);
+                QString methodName = method.name();
+                if (methodName.indexOf("test_") == 0) {
+                    QMetaObject::invokeMethod(object,methodName.toLocal8Bit().constData(),Qt::DirectConnection);
+                }
+            }
+        }
+
+        bool hasError = object->property("hasError").toBool();
+        if (hasError) {
+            res = false;
+        }
+    }
+
+    return res;
+}
+
 QObject* Automator::obtainSingletonObject(QString package, int versionMajor, int versionMinor, QString typeName)
 {
     /// Modified from QFAppDispatcher::singletonObject() in QuickFlux project

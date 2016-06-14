@@ -51,3 +51,16 @@ void TestableUnitTests::automatorObtainSingletonObject()
     QObject* store = automator.obtainSingletonObject("PackageA",1,0,"Store");
     QVERIFY(store);
 }
+
+void TestableUnitTests::automatorRunTestCase()
+{
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath(QString(SRCDIR));
+    engine.addImportPath("qrc:///");
+    engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/SceneTest.qml"));
+    Automator automator(&engine);
+
+    QVERIFY(automator.runTestCase());
+
+}

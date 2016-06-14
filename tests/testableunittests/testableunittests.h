@@ -19,6 +19,8 @@ private slots:
     void automatorSearchWindow();
 
     void automatorObtainSingletonObject();
+
+    void automatorRunTestCase();
 };
 
 #endif // TESTABLEUNITTESTS_H

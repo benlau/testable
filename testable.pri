@@ -17,3 +17,10 @@ SOURCES += \
     $$PWD/priv/testrunnerwrapper.cpp \
     $$PWD/resourcegenerator.cpp
 
+DISTFILES += \
+    $$PWD/Testable/TestableCase.qml \
+    $$PWD/Testable/qmldir
+
+RESOURCES += \
+    $$PWD/testable.qrc
+

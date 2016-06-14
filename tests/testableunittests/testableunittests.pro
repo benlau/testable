@@ -24,4 +24,5 @@ DISTFILES += \
     window.qml \
     PackageA/example.js \
     PackageA/qmldir \
-    PackageA/Store.qml
+    PackageA/Store.qml \
+    SceneTest.qml

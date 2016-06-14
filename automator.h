@@ -43,6 +43,8 @@ public:
 
     void setAnyError(bool anyError);
 
+    bool runTestCase() const;
+
     QObject* obtainSingletonObject(QString package, int versionMajor, int versionMinor, QString typeName);
 
 
