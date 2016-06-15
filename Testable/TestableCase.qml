@@ -1,9 +1,14 @@
 import QtQuick 2.0
+import Testable 1.0
 
 QtObject {
     property string name
 
     property bool hasError: false
+
+    function wait(timeout) {
+        TestUtils.wait(timeout);
+    }
 
     function compare(actual, expected) {
         if (actual !== expected) {

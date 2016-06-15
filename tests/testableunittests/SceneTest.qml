@@ -12,6 +12,7 @@ Window {
 
         function initTestCase() {
             executedCount++;
+            wait(100);
         }
 
         function cleanupTestCase() {
