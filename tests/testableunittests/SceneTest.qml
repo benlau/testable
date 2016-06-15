@@ -10,6 +10,14 @@ Window {
 
         property int executedCount: 0
 
+        function initTestCase() {
+            executedCount++;
+        }
+
+        function cleanupTestCase() {
+            executedCount++;
+        }
+
         function test_abc() {
             compare(1,1);
             executedCount++;

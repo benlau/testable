@@ -39,6 +39,23 @@ static QObjectList uniq(const QObjectList& list) {
     return res;
 }
 
+static void invokeMethodIfPresent(QObject* object, QString method) {
+    const QMetaObject* meta = object->metaObject();
+
+    int index = -1;
+
+    for (int i = 0 ; i < meta->methodCount(); i++) {
+        if (method == meta->method(i).name()) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index >= 0) {
+        QMetaObject::invokeMethod(object, method.toLocal8Bit().constData(), Qt::DirectConnection);
+    }
+}
+
 static QObjectList findAllChildren(QObject* object) {
     QObjectList result;
 
@@ -325,13 +342,21 @@ bool Automator::runTestCase() const
 
         if (className.indexOf("TestableCase_QMLTYPE") == 0) {
             const QMetaObject* meta = object->metaObject();
+
+            invokeMethodIfPresent(object,"initTestCase");
+
             for (int j = 0 ; j < meta->methodCount();j++) {
                 const QMetaMethod method = meta->method(j);
                 QString methodName = method.name();
                 if (methodName.indexOf("test_") == 0) {
+                    invokeMethodIfPresent(object, "init");
                     QMetaObject::invokeMethod(object,methodName.toLocal8Bit().constData(),Qt::DirectConnection);
+                    invokeMethodIfPresent(object, "cleanup");
                 }
             }
+
+            invokeMethodIfPresent(object,"cleanupTestCase");
+
         }
 
         bool hasError = object->property("hasError").toBool();
