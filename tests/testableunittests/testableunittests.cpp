@@ -63,4 +63,8 @@ void TestableUnitTests::automatorRunTestCase()
 
     QVERIFY(automator.runTestCase());
 
+    QObject* testCase = automator.findObject("testCase");
+    QVERIFY(testCase);
+    QCOMPARE(testCase->property("executedCount").toInt(), 1);
+
 }

@@ -39,6 +39,32 @@ static QObjectList uniq(const QObjectList& list) {
     return res;
 }
 
+static QObjectList findAllChildren(QObject* object) {
+    QObjectList result;
+
+    result << object;
+
+    foreach(QObject* child, object->children()) {
+        result.append(findAllChildren(child));
+    }
+
+    if (inherited(object, "QQuickFlickable") || inherited(object, "QQuickWindow")) {
+        QQuickItem* contentItem = object->property("contentItem").value<QQuickItem*>();
+        if (contentItem) {
+
+            QList<QQuickItem *>items = contentItem->childItems();
+
+            foreach(QQuickItem* item, items) {
+                result.append(findAllChildren(item));
+            }
+
+            result.append(findAllChildren(contentItem));
+        }
+    }
+
+    return uniq(result);
+}
+
 Automator::Automator(QQmlApplicationEngine* engine) : QObject()
 {
     setEngine(engine);
@@ -290,7 +316,7 @@ void Automator::setAnyError(bool anyError)
 
 bool Automator::runTestCase() const
 {
-    QObjectList list = m_engine->rootObjects().first()->findChildren<QObject*>();
+    QObjectList list = findAllChildren(m_engine->rootObjects().first());
     bool res = true;
 
     for (int i = 0 ; i < list.size() ; i++) {
