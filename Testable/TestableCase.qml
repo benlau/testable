@@ -16,7 +16,7 @@ QtObject {
             hasError = true;
             var message = "Compared values are not the same\n";
             message += "  Actual: " + actual + "\n";
-            message += "  Expected: " + expected + "\n";
+            message += "  Expected: " + expected;
             throw new Error(message);
         }
     }
