@@ -7,6 +7,7 @@ Features
 2. Support to run QTest (C++) and Quick Tests (QML) in a single project
 3. Run specific test case / test object by command line
 4. Utilities to search QQuickItem from Repeater/Flickable/ListView/GridView
+5. Execute unit test written in Javascript by C++ ( Automator.runTestCase() )
 
 Classes
 
