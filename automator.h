@@ -43,7 +43,7 @@ public:
 
     void setAnyError(bool anyError);
 
-    bool runTestCase() const;
+    bool runTestCase(QStringList filters = QStringList()) const;
 
     QObject* obtainSingletonObject(QString package, int versionMajor, int versionMinor, QString typeName);
 

@@ -23,6 +23,11 @@ Window {
             compare(1,1);
             executedCount++;
         }
+
+        function test_def() {
+            compare(1,1);
+            executedCount++;
+        }
     }
 
 }
