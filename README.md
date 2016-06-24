@@ -25,6 +25,9 @@ Example
 
 Please refer to the project in examples folder
 
+
+Run all tests with function name equal to "test1"
+
 ```
 $ ./testable test1
 ********* Start testing of DummyTests1 *********
@@ -43,6 +46,7 @@ Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted
 ********* Finished testing of DummyTests2 *********
 ```
 
+Run all test functions in DummyTests1 test object
 
 ```
 $ ./testable DummyTests1
@@ -57,6 +61,8 @@ Totals: 4 passed, 0 failed, 0 skipped, 0 blacklisted
 All test cases passed!
 ```
 
+Run a test function via qmltest
+
 ```
 ./testable QuickTests::test_dummy1
 ********* Start testing of QuickTests *********
@@ -67,6 +73,8 @@ PASS   : QuickTests::QuickTests::cleanupTestCase()
 Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted
 ********* Finished testing of QuickTests *********
 ```
+
+Run all tests
 
 ```
 ./testable
