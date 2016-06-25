@@ -70,16 +70,34 @@ static bool hasMethods(QObject* object, QStringList filters) {
     return res;
 }
 
-static void invokeMethodIfPresent(QObject* object, QString method) {
-    if (hasMethod(object, method)) {
-        QMetaObject::invokeMethod(object, method.toLocal8Bit().constData(), Qt::DirectConnection);
+static void invokeMethod(QJSValue jsObject, QString method) {
+    QJSValue func = jsObject.property(method);
+    QJSValue result = func.call();
+
+    if (result.isError()) {
+        QStringList stack = result.property("stack").toString().split("\n");
+
+        QStringList pair = stack[1].split("@");
+        QString source = pair[1];
+
+        QString message = result.property("message").toString();
+
+        qWarning().noquote() << source + ":" << "Error:" << message;
     }
 }
 
-static bool invokeTestableCase(QObject* object, QStringList filters) {
+static void invokeMethodIfPresent(QObject* object, QString method, QJSValue jsObject) {
+    if (hasMethod(object, method)) {
+        invokeMethod(jsObject, method);
+    }
+}
+
+static void invokeTestableCase(QQmlEngine* engine, QObject* object, QStringList filters) {
     const QMetaObject* meta = object->metaObject();
 
-    invokeMethodIfPresent(object,"initTestCase");
+    QJSValue jsObject = engine->newQObject(object);
+
+    invokeMethodIfPresent(object,"initTestCase", jsObject);
 
     for (int j = 0 ; j < meta->methodCount();j++) {
         const QMetaMethod method = meta->method(j);
@@ -87,13 +105,14 @@ static bool invokeTestableCase(QObject* object, QStringList filters) {
 
         if (methodName.indexOf("test_") == 0 &&
             (filters.size() == 0 || filters.indexOf(methodName) >= 0)) {
-            invokeMethodIfPresent(object, "init");
-            QMetaObject::invokeMethod(object,methodName.toLocal8Bit().constData(),Qt::DirectConnection);
-            invokeMethodIfPresent(object, "cleanup");
+            invokeMethodIfPresent(object, "init", jsObject);
+            invokeMethod(jsObject,methodName);
+//            QMetaObject::invokeMethod(object,methodName.toLocal8Bit().constData(),Qt::DirectConnection);
+            invokeMethodIfPresent(object, "cleanup", jsObject);
         }
     }
 
-    invokeMethodIfPresent(object,"cleanupTestCase");
+    invokeMethodIfPresent(object,"cleanupTestCase", jsObject);
 }
 
 static QObjectList findAllChildren(QObject* object) {
@@ -385,7 +404,7 @@ bool Automator::runTestCase(QStringList filters) const
             if (filters.size() == 0 ||
                 hasMethods(object,filters)) {
 
-                invokeTestableCase(object, filters);
+                invokeTestableCase(m_engine.data(), object, filters);
             }
         }
 

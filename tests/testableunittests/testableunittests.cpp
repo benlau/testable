@@ -58,7 +58,7 @@ void TestableUnitTests::automatorRunTestCase()
 
     engine.addImportPath(QString(SRCDIR));
     engine.addImportPath("qrc:///");
-    engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/SceneTest.qml"));
+    engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/TestableCaseTests.qml"));
     Automator automator(&engine);
 
     QVERIFY(automator.runTestCase());
@@ -70,5 +70,19 @@ void TestableUnitTests::automatorRunTestCase()
     testCase->setProperty("executedCount", 0);
     QVERIFY(automator.runTestCase(QStringList() << "test_def"));
     QCOMPARE(testCase->property("executedCount").toInt(), 3);
+
+}
+
+void TestableUnitTests::automatorRunTestCase_fails()
+{
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath(QString(SRCDIR));
+    engine.addImportPath("qrc:/");
+    engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/TestableCaseFailTests.qml"));
+
+    Automator automator(&engine);
+
+    QVERIFY(!automator.runTestCase());
 
 }

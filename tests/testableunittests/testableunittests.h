@@ -21,6 +21,9 @@ private slots:
     void automatorObtainSingletonObject();
 
     void automatorRunTestCase();
+
+    void automatorRunTestCase_fails();
+
 };
 
 #endif // TESTABLEUNITTESTS_H
