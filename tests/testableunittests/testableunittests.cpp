@@ -86,3 +86,22 @@ void TestableUnitTests::automatorRunTestCase_fails()
     QVERIFY(!automator.runTestCase());
 
 }
+
+void TestableUnitTests::autmatorCreatorTracker()
+{
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath(QString(SRCDIR));
+    engine.addImportPath("qrc:/");
+    engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/AutomatorCreateTracker.qml"));
+
+    Automator automator(&engine);
+
+    QQuickItem * label = qobject_cast<QQuickItem*>(automator.findObject("label"));
+    QVERIFY(label);
+
+    automator.createTracker(label,"red");
+
+    automator.wait(60000);
+
+}

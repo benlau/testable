@@ -47,6 +47,7 @@ public:
 
     QObject* obtainSingletonObject(QString package, int versionMajor, int versionMinor, QString typeName);
 
+    QQuickItem* createTracker(QQuickItem* target,QColor color, qreal opacity = 0.3);
 
 private slots:
     void onWarnings(QList<QQmlError>);

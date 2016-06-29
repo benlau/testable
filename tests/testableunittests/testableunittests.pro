@@ -26,4 +26,5 @@ DISTFILES += \
     PackageA/qmldir \
     PackageA/Store.qml \
     TestableCaseTests.qml \
-    TestableCaseFailTests.qml
+    TestableCaseFailTests.qml \
+    AutomatorCreateTracker.qml

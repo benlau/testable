@@ -24,6 +24,8 @@ private slots:
 
     void automatorRunTestCase_fails();
 
+    void autmatorCreatorTracker();
+
 };
 
 #endif // TESTABLEUNITTESTS_H

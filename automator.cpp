@@ -447,6 +447,25 @@ QObject* Automator::obtainSingletonObject(QString package, int versionMajor, int
     return object;
 }
 
+QQuickItem *Automator::createTracker(QQuickItem *target, QColor color, qreal opacity)
+{
+    QString qml  = "import QtQuick 2.0\nRectangle {anchors.fill:parent }";
+
+    QQuickItem* tracker = 0;
+
+    QQmlComponent comp (m_engine.data());
+    comp.setData(qml.toUtf8(),QUrl());
+    tracker = qobject_cast<QQuickItem*>(comp.create());
+
+    Q_ASSERT(tracker);
+
+    tracker->setParentItem(target);
+    tracker->setProperty("color", color);
+    tracker->setProperty("opacity", opacity);
+
+    return tracker;
+}
+
 void Automator::onWarnings(QList<QQmlError> warnings)
 {
     for (int i = 0 ; i < warnings.size();i++){
