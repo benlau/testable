@@ -1,7 +1,12 @@
 QML Unit Test Utilities
 =======================
 
-Features
+Qt offers two testing frameworks : [QTest](http://doc.qt.io/qt-5/qtest.html) for C++ and [Qt Quick Test](http://doc.qt.io/qt-5/qtquick-qtquicktest.html) for QML. They are powerful testing library. However, they have few problems:
+
+1. QTEST_MIAN() in QTest run test cases from a single QObject object. If you put all test cases into a single object, it may become a god object.
+2. QUICK_TEST_MAIN() in Qt Quick Test do not export the QQmlEngine instance. Therefore you can not set context properties and use custom QQuickImageProvider
+
+Testable a solution for those problems. The features:
 
 1. Support to run tests from mutiple QObject
 2. Support to run QTest (C++) and Quick Tests (QML) in a single project
