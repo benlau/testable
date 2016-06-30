@@ -10,10 +10,16 @@ Window {
 
         property int executedCount: 0
 
-        function test_abc() {
+        function test_compare_fail() {
             console.log("Expected fail test case:");
             compare(1,0);
         }
+
+        function test_exception() {
+            // it should throw exception
+            t = 123;
+        }
+
 
     }
 

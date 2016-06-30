@@ -77,8 +77,13 @@ static void invokeMethod(QJSValue jsObject, QString method) {
     if (result.isError()) {
         QStringList stack = result.property("stack").toString().split("\n");
 
-        QStringList pair = stack[1].split("@");
+        QStringList pair = stack[0].split("@");
         QString source = pair[1];
+
+        if (source.indexOf("qrc:///Testable/TestableCase.qml") == 0) {
+            pair = stack[1].split("@");
+            source = pair[1];
+        }
 
         QString message = result.property("message").toString();
 
