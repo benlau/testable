@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
     return error;
 }
-``
+```
 
 Please refer to the project in [examples](https://github.com/benlau/testable/tree/master/examples/testableexample) folder.
 
