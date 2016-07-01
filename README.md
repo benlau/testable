@@ -28,8 +28,32 @@ Installation
 Example
 =======
 
-Please refer to the project in examples folder
+```
+int main(int argc, char *argv[])
+{
+    QGuiApplication app(argc,argv);
 
+    TestRunner runner;
+
+    runner.add<DummyTests1>(); // Run tests in DummyTest1 QObject
+    runner.add<DummyTests2>(); // Run tests in DummyTest2 QObject
+    // Run Qt Quick Test in SRCDIR. It will scan all qml file begin with tst_
+    runner.add(QString(SRCDIR));
+
+    runner.addImportPath("qrc:///");
+    runner.setEngineHook(callback);
+
+    bool error = runner.exec(app.arguments());
+
+    if (!error) {
+        qWarning() << "All test cases passed!";
+    }
+
+    return error;
+}
+``
+
+Please refer to the project in [examples](https://github.com/benlau/testable/tree/master/examples/testableexample) folder.
 
 Run all tests with function name equal to "test1"
 
