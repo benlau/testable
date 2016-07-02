@@ -454,7 +454,7 @@ QObject* Automator::obtainSingletonObject(QString package, int versionMajor, int
 
 QQuickItem *Automator::createTracker(QQuickItem *target, QColor color, qreal opacity)
 {
-    QString qml  = "import QtQuick 2.0\nRectangle {anchors.fill:parent }";
+    QString qml  = "import QtQuick 2.0\nRectangle {anchors.centerIn:parent; width: parent ? parent.width: 0; height:parent ? parent.height : 0; }";
 
     QQuickItem* tracker = 0;
 
