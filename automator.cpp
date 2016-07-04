@@ -80,7 +80,7 @@ static void invokeMethod(QJSValue jsObject, QString method) {
         QStringList pair = stack[0].split("@");
         QString source = pair[1];
 
-        if (source.indexOf("qrc:///Testable/TestableCase.qml") == 0) {
+        if (source.indexOf(QRegExp("qrc:/*Testable/TestableCase.qml")) == 0) {
             pair = stack[1].split("@");
             source = pair[1];
         }
