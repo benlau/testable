@@ -1,0 +1,25 @@
+language : cpp
+env:
+  - DISPLAY=:99.0
+compiler:
+  - gcc
+before_install:
+    - export PATH=$PWD/.travis:$PATH
+    - sh -e /etc/init.d/xvfb start
+    - ./.travis/qt-5.5.1
+
+script:
+    - source qt-5.5.1.env
+    - export QT_DOCS_STYLE=$PWD/Qt/Docs/Qt-5.5/global/template/style/offline.css
+    - cd tests/testableunittests/
+    - qmake
+    - make
+    - ls
+    - ./testableunittests
+    - cd -
+    - cd tests/testablecmdtests
+    - qmake
+    - make
+    - bash ./run-tests.sh
+
+
