@@ -70,7 +70,7 @@ static bool hasMethods(QObject* object, QStringList filters) {
     return res;
 }
 
-static void invokeMethod(QJSValue jsObject, QString method) {
+static void invokeMethod(QObject*object, QString method, QJSValue jsObject) {
     QJSValue func = jsObject.property(method);
     QJSValue result = func.call();
 
@@ -88,12 +88,13 @@ static void invokeMethod(QJSValue jsObject, QString method) {
         QString message = result.property("message").toString();
 
         qWarning().noquote() << source + ":" << "Error:" << message;
+        object->setProperty("hasError", true);
     }
 }
 
 static void invokeMethodIfPresent(QObject* object, QString method, QJSValue jsObject) {
     if (hasMethod(object, method)) {
-        invokeMethod(jsObject, method);
+        invokeMethod(object,method, jsObject);
     }
 }
 
@@ -111,8 +112,7 @@ static void invokeTestableCase(QQmlEngine* engine, QObject* object, QStringList 
         if (methodName.indexOf("test_") == 0 &&
             (filters.size() == 0 || filters.indexOf(methodName) >= 0)) {
             invokeMethodIfPresent(object, "init", jsObject);
-            invokeMethod(jsObject,methodName);
-//            QMetaObject::invokeMethod(object,methodName.toLocal8Bit().constData(),Qt::DirectConnection);
+            invokeMethod(object,methodName,jsObject);
             invokeMethodIfPresent(object, "cleanup", jsObject);
         }
     }

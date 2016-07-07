@@ -83,6 +83,8 @@ void TestableUnitTests::automatorRunTestCase_fails()
 
     Automator automator(&engine);
 
+    QVERIFY(!automator.runTestCase(QStringList() << "test_exception"));
+
     QVERIFY(!automator.runTestCase());
 
 }
@@ -101,7 +103,5 @@ void TestableUnitTests::autmatorCreatorTracker()
     QVERIFY(label);
 
     automator.createTracker(label,"red");
-
-    automator.wait(60000);
 
 }
