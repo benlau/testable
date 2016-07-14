@@ -1,14 +1,14 @@
 #include <QEventLoop>
 #include <QTimer>
 #include <QtQml>
-#include "testutils.h"
+#include "testableutils.h"
 
-TestUtils::TestUtils(QObject *parent) : QObject(parent)
+TestableUtils::TestableUtils(QObject *parent) : QObject(parent)
 {
 
 }
 
-void TestUtils::wait(int timeout)
+void TestableUtils::wait(int timeout)
 {
     QEventLoop loop;
     QTimer timer;
@@ -23,7 +23,7 @@ static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(engine);
     Q_UNUSED(scriptEngine);
 
-    TestUtils* object = new TestUtils();
+    TestableUtils* object = new TestableUtils();
 
     return object;
 }
@@ -31,7 +31,7 @@ class TestUtilsRegistrationHelper {
 
 public:
     TestUtilsRegistrationHelper() {
-        qmlRegisterSingletonType<TestUtils>("Testable", 1, 0, "TestUtils", provider);
+        qmlRegisterSingletonType<TestableUtils>("Testable", 1, 0, "TestUtils", provider);
     }
 };
 
