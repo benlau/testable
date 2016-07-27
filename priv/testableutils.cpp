@@ -27,13 +27,10 @@ static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
 
     return object;
 }
-class TestUtilsRegistrationHelper {
 
-public:
-    TestUtilsRegistrationHelper() {
-        qmlRegisterSingletonType<TestableUtils>("Testable", 1, 0, "TestUtils", provider);
-    }
-};
+void registerTestableUtils() {
+    qmlRegisterSingletonType<TestableUtils>("Testable", 1, 0, "TestableUtils", provider);
+}
 
-static TestUtilsRegistrationHelper registerHelper;
+Q_COREAPP_STARTUP_FUNCTION(registerTestableUtils)
 

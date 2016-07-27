@@ -7,7 +7,7 @@ QtObject {
     property bool hasError: false
 
     function wait(timeout) {
-        TestUtils.wait(timeout);
+        TestableUtils.wait(timeout);
     }
 
     function compare(actual, expected) {
