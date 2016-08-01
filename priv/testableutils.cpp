@@ -2,6 +2,9 @@
 #include <QTimer>
 #include <QtQml>
 #include "testableutils.h"
+#include "objectutils.h"
+
+using namespace Testable;
 
 TestableUtils::TestableUtils(QObject *parent) : QObject(parent)
 {
@@ -18,6 +21,20 @@ void TestableUtils::wait(int timeout)
     loop.exec();
 }
 
+QObject *TestableUtils::findChild(QObject *parent, const QString &objectName)
+{
+    QObjectList list = ObjectUtils::allChildren(parent);
+
+    QObject *res = 0;
+    foreach (QObject* object, list) {
+        if (object->objectName() == objectName) {
+            res = object;
+            break;
+        }
+    }
+
+    return res;
+}
 
 static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     Q_UNUSED(engine);

@@ -3,6 +3,7 @@ import Testable 1.0
 import QtQuick.Window 2.0
 
 Window {
+    id: window
 
     TestableCase {
         id: testCase
@@ -19,7 +20,11 @@ Window {
             executedCount++;
         }
 
-        function test_abc() {
+        function test_findChild() {
+            var child = findChild(window, "testCase");
+            compare(child === testCase, true);
+            compare(child.hasOwnProperty("executedCount"), true);
+
             compare(1,1);
             executedCount++;
         }

@@ -20,4 +20,8 @@ QtObject {
         }
     }
 
+    function findChild(parent, objectName) {
+        return TestableUtils.findChild(parent, objectName);
+    }
+
 }

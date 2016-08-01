@@ -12,4 +12,6 @@ signals:
 public slots:
 
     void wait(int timeout = 1000);
+
+    QObject* findChild(QObject*parent, const QString& objectName );
 };
