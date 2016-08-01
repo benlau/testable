@@ -5,39 +5,9 @@
 #include <QTime>
 #include <QTest>
 #include "automator.h"
+#include "priv/objectutils.h"
 
-static bool inherited(QObject* object,QString className) {
-    bool res = false;
-
-    const QMetaObject *metaObject = object->metaObject();
-
-    while (metaObject) {
-        if (metaObject->className() == className) {
-            res = true;
-            break;
-        }
-        metaObject = metaObject->superClass();
-    }
-
-
-    return res;
-}
-
-static QObjectList uniq(const QObjectList& list) {
-
-    QMap<QObject*, bool> map;
-    QObjectList res;
-
-    for (int i = 0 ; i < list.count() ;i++) {
-        QObject* object = list.at(i);
-        if (!map.contains(object)) {
-            res << object;
-            map[object] = true;
-        }
-    }
-
-    return res;
-}
+using namespace Testable;
 
 static bool hasMethod(QObject* object, QString method) {
     const QMetaObject* meta = object->metaObject();
@@ -118,32 +88,6 @@ static void invokeTestableCase(QQmlEngine* engine, QObject* object, QStringList 
     }
 
     invokeMethodIfPresent(object,"cleanupTestCase", jsObject);
-}
-
-static QObjectList findAllChildren(QObject* object) {
-    QObjectList result;
-
-    result << object;
-
-    foreach(QObject* child, object->children()) {
-        result.append(findAllChildren(child));
-    }
-
-    if (inherited(object, "QQuickFlickable") || inherited(object, "QQuickWindow")) {
-        QQuickItem* contentItem = object->property("contentItem").value<QQuickItem*>();
-        if (contentItem) {
-
-            QList<QQuickItem *>items = contentItem->childItems();
-
-            foreach(QQuickItem* item, items) {
-                result.append(findAllChildren(item));
-            }
-
-            result.append(findAllChildren(contentItem));
-        }
-    }
-
-    return uniq(result);
 }
 
 Automator::Automator(QQmlApplicationEngine* engine) : QObject()
@@ -327,7 +271,7 @@ QObjectList Automator::findObjects(QObject *object, QString objectName)
         result << object;
     }
 
-    if ( inherited(object,"QQuickRepeater")) {
+    if (ObjectUtils::inherited(object,"QQuickRepeater")) {
         int count = object->property("count").toInt();
 
         for (int i = 0 ;  i < count ;i++) {
@@ -341,8 +285,7 @@ QObjectList Automator::findObjects(QObject *object, QString objectName)
             }
         }
 
-    } else if (inherited(object, "QQuickFlickable") || inherited(object, "QQuickWindow")) {
-
+    } else if (ObjectUtils::inherited(object, "QQuickFlickable") || ObjectUtils::inherited(object, "QQuickWindow")) {
 
         QQuickItem* contentItem = object->property("contentItem").value<QQuickItem*>();
 
@@ -374,7 +317,7 @@ QObjectList Automator::findObjects(QObject *object, QString objectName)
         }
     }
 
-    return uniq(result);
+    return ObjectUtils::uniq(result);
 }
 
 QQuickWindow *Automator::window()
@@ -397,7 +340,7 @@ void Automator::setAnyError(bool anyError)
 
 bool Automator::runTestCase(QStringList filters) const
 {
-    QObjectList list = findAllChildren(m_engine->rootObjects().first());
+    QObjectList list = ObjectUtils::allChildren(m_engine->rootObjects().first());
     bool res = true;
 
     for (int i = 0 ; i < list.size() ; i++) {

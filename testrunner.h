@@ -11,13 +11,13 @@ public:
     TestRunner();
     ~TestRunner();
 
-    // Add a QObject test suite
+    /// Add a QObject test suite
     void add(QObject* object);
 
-    // Add Qt Quick test suite
+    /// Add Qt Quick test suite
     void add(const QString& path);
 
-    // Add a QObject test suite
+    /// Add a QObject test suite
     template <typename T> void add();
 
     /// Execute test case with arguments
