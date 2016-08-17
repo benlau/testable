@@ -45,7 +45,7 @@ static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     return object;
 }
 
-void registerTestableUtils() {
+static void registerTestableUtils() {
     qmlRegisterSingletonType<TestableUtils>("Testable", 1, 0, "TestableUtils", provider);
 }
 

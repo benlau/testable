@@ -61,13 +61,9 @@ static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
     return object;
 }
 
-class TestableTestRunnerWrapperRegistrationHelper {
+static void registerSingleton() {
+    qmlRegisterSingletonType<TestRunnerWrapper>("Testable", 1, 0, "TestRunner", provider);
+}
 
-public:
-    TestableTestRunnerWrapperRegistrationHelper() {
-        qmlRegisterSingletonType<TestRunnerWrapper>("Testable", 1, 0, "TestRunner", provider);
-    }
-};
-
-static TestableTestRunnerWrapperRegistrationHelper registerHelper;
+Q_COREAPP_STARTUP_FUNCTION(registerSingleton)
 
