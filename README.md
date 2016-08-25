@@ -1,5 +1,6 @@
 Testable - Qt/QML Unit Test Utilities
 =======================
+[![Build Status](https://travis-ci.org/benlau/testable.svg?branch=master)](https://travis-ci.org/benlau/testable)
 
 Qt offers two testing frameworks : [QTest](http://doc.qt.io/qt-5/qtest.html) for C++ and [Qt Quick Test](http://doc.qt.io/qt-5/qtquick-qtquicktest.html) for QML. Testable is an utililiy library to enhance their function.
 
