@@ -25,7 +25,6 @@ public:
 
     bool waitExists(QString objectName,int timeout = 1000);
 
-    static bool waitUntil(QObject *object, QString property, QVariant value,int timeout = 1000);
 
     bool waitUntil(QString objectName, QString property, QVariant value, int timeout = 1000);
 
@@ -48,6 +47,11 @@ public:
     QObject* obtainSingletonObject(QString package, int versionMajor, int versionMinor, QString typeName);
 
     QQuickItem* createTracker(QQuickItem* target,QColor color, qreal opacity = 0.3);
+
+    static bool waitUntil(QObject *object, QString property, QVariant value,int timeout = 1000);
+
+    /// Wait until a signal is emietted from object
+    static bool waitUntil(QObject *object, const char* signal, int timeout = 1000);
 
 private slots:
     void onWarnings(QList<QQmlError>);

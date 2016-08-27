@@ -190,6 +190,32 @@ bool Automator::waitUntil(QObject *object, QString property, QVariant value, int
     return true;
 }
 
+bool Automator::waitUntil(QObject *object, const char *signal, int timeout)
+{
+    bool exceedTimeout = false;
+    QTime time;
+    time.start();
+
+    QTimer timer;
+
+    QEventLoop loop;
+
+    if (timeout > 0) {
+        timer.setInterval(timeout);
+        connect(&timer, &QTimer::timeout, [&]() -> void {
+            exceedTimeout = true;
+            loop.quit();
+        });
+        timer.start();
+    }
+    connect(object,signal,&loop,SLOT(quit()));
+
+    loop.exec();
+    timer.stop();
+
+    return !exceedTimeout;
+}
+
 bool Automator::waitUntil(QString objectName, QString property, QVariant value, int timeout)
 {
     QTime time;

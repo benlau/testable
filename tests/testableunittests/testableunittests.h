@@ -26,6 +26,8 @@ private slots:
 
     void autmatorCreatorTracker();
 
+    void automatorWaitUntilSignal();
+
 };
 
 #endif // TESTABLEUNITTESTS_H

@@ -105,3 +105,23 @@ void TestableUnitTests::autmatorCreatorTracker()
     automator.createTracker(label,"red");
 
 }
+
+void TestableUnitTests::automatorWaitUntilSignal()
+{
+    QTimer * timer = new QTimer(this);
+    QTime time;
+    time.start();
+
+    timer->setInterval(500);
+    timer->setSingleShot(true);
+    timer->start();
+
+    QVERIFY(Automator::waitUntil(timer, SIGNAL(timeout())));
+
+    QVERIFY(time.elapsed() >= 400);
+
+    time.start();
+    QVERIFY(!Automator::waitUntil(timer, SIGNAL(timeout())));
+    QVERIFY(time.elapsed() >= 900);
+
+}
