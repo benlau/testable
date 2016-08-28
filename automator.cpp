@@ -4,6 +4,7 @@
 #include <QQuickItem>
 #include <QTime>
 #include <QTest>
+#include <QSignalSpy>
 #include "automator.h"
 #include "priv/objectutils.h"
 
@@ -192,20 +193,16 @@ bool Automator::waitUntil(QObject *object, QString property, QVariant value, int
 
 bool Automator::waitUntil(QObject *object, const char *signal, int timeout)
 {
-    bool exceedTimeout = false;
-    QTime time;
-    time.start();
-
     QTimer timer;
+    QSignalSpy spy(&timer,SIGNAL(timeout()));
 
     QEventLoop loop;
 
     if (timeout > 0) {
+        // Avoid using lambda function with QTimer::timeout to keep travis happy
         timer.setInterval(timeout);
-        connect(&timer, &QTimer::timeout, [&]() -> void {
-            exceedTimeout = true;
-            loop.quit();
-        });
+        timer.setSingleShot(true);
+        connect(&timer,SIGNAL(timeout()), &loop,SLOT(quit()));
         timer.start();
     }
     connect(object,signal,&loop,SLOT(quit()));
@@ -213,7 +210,7 @@ bool Automator::waitUntil(QObject *object, const char *signal, int timeout)
     loop.exec();
     timer.stop();
 
-    return !exceedTimeout;
+    return spy.count() == 0;
 }
 
 bool Automator::waitUntil(QString objectName, QString property, QVariant value, int timeout)
