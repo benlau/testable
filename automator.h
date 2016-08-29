@@ -51,7 +51,7 @@ public:
     static bool waitUntil(QObject *object, QString property, QVariant value,int timeout = 1000);
 
     /// Wait until a signal is emietted from object
-    static bool waitUntil(QObject *object, const char* signal, int timeout = 1000);
+    static bool waitUntilSignal(QObject *object, const char* signal, int timeout = 1000);
 
 private slots:
     void onWarnings(QList<QQmlError>);

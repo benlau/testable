@@ -191,7 +191,7 @@ bool Automator::waitUntil(QObject *object, QString property, QVariant value, int
     return true;
 }
 
-bool Automator::waitUntil(QObject *object, const char *signal, int timeout)
+bool Automator::waitUntilSignal(QObject *object, const char *signal, int timeout)
 {
     QTimer timer;
     QSignalSpy spy(&timer,SIGNAL(timeout()));

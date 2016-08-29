@@ -116,12 +116,12 @@ void TestableUnitTests::automatorWaitUntilSignal()
     timer->setSingleShot(true);
     timer->start();
 
-    QVERIFY(Automator::waitUntil(timer, SIGNAL(timeout())));
+    QVERIFY(Automator::waitUntilSignal(timer, SIGNAL(timeout())));
 
     QVERIFY(time.elapsed() >= 400);
 
     time.start();
-    QVERIFY(!Automator::waitUntil(timer, SIGNAL(timeout())));
+    QVERIFY(!Automator::waitUntilSignal(timer, SIGNAL(timeout())));
     QVERIFY(time.elapsed() >= 900);
 
 }
