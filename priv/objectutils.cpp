@@ -62,3 +62,14 @@ QObjectList Testable::ObjectUtils::allChildren(QObject *object)
 
     return uniq(result);
 }
+
+QObjectList Testable::ObjectUtils::allChildren(QList<QObject *> objects)
+{
+    QObjectList result;
+
+    foreach (QObject* object, objects) {
+        result << allChildren(object);
+    }
+
+    return uniq(result);
+}

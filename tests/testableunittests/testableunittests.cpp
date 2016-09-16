@@ -89,6 +89,22 @@ void TestableUnitTests::automatorRunTestCase_fails()
 
 }
 
+void TestableUnitTests::automatorRunTestCase_onNonRootObject()
+{
+    QQmlApplicationEngine engine;
+
+    engine.addImportPath(QString(SRCDIR));
+    engine.addImportPath("qrc:///");
+    engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/Dummy.qml"));
+    engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/TestableCaseTests.qml"));
+    Automator automator(&engine);
+    QVERIFY(automator.runTestCase());
+
+    QObject* testCase = automator.findObject("testCase");
+    QVERIFY(testCase);
+    QCOMPARE(testCase->property("executedCount").toInt(), 4);
+}
+
 void TestableUnitTests::autmatorCreatorTracker()
 {
     QQmlApplicationEngine engine;

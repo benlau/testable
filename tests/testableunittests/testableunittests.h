@@ -24,9 +24,13 @@ private slots:
 
     void automatorRunTestCase_fails();
 
+    void automatorRunTestCase_onNonRootObject();
+
+
     void autmatorCreatorTracker();
 
     void automatorWaitUntilSignal();
+
 
 };
 

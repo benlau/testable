@@ -17,6 +17,8 @@ public:
     /// Get all the descendant of an object
     static QObjectList allChildren(QObject* object);
 
+    static QObjectList allChildren(QList<QObject*> objects);
+
 };
 
 }

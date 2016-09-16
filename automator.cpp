@@ -136,19 +136,16 @@ QObject *Automator::findObject(QString objectName)
 QObjectList Automator::findObjects(QString objectName)
 {
     QObjectList result;
-    QObject *firstObject = m_engine->rootObjects().first();
 
-    if (!firstObject) {
-        return result;
+    foreach (QObject* object, m_engine->rootObjects()) {
+        QObjectList subResult = findObjects(object, objectName);
+
+        if (subResult.size() > 0) {
+            result << subResult;
+        }
     }
 
-    QObjectList subResult = findObjects(firstObject, objectName);
-
-    if (subResult.size() > 0) {
-        result << subResult;
-    }
-
-    return result;
+    return ObjectUtils::uniq(result);
 }
 
 bool Automator::waitExists(QString objectName, int timeout)
@@ -363,7 +360,7 @@ void Automator::setAnyError(bool anyError)
 
 bool Automator::runTestCase(QStringList filters) const
 {
-    QObjectList list = ObjectUtils::allChildren(m_engine->rootObjects().first());
+    QObjectList list = ObjectUtils::allChildren(m_engine->rootObjects());
     bool res = true;
 
     for (int i = 0 ; i < list.size() ; i++) {
