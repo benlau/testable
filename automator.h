@@ -11,7 +11,7 @@ class Automator : public QObject
 {
     Q_OBJECT
 public:
-    Automator(QQmlApplicationEngine* engine);
+    Automator(QQmlApplicationEngine* engine = 0);
 
     QQmlApplicationEngine *engine() const;
 
