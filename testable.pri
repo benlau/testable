@@ -1,4 +1,5 @@
 INCLUDEPATH += $$PWD
+QML_IMPORT_PATH += $$PWD
 
 QT += testlib quick qml qmltest xml
 
