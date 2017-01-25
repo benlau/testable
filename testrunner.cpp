@@ -3,6 +3,7 @@
 #include <QMetaObject>
 #include <QMetaMethod>
 #include <QPointer>
+#include <QCommandLineParser>
 #include "testrunner.h"
 
 static TestRunner *m_defaultInstance = 0;
@@ -14,6 +15,12 @@ TestRunner::TestRunner()
     }
 
     m_engineHook = 0;
+
+    m_gallery = [](const QStringList& arguments) {
+        Q_UNUSED(arguments);
+        qWarning() << "TestRunner: Gallery function is not set";
+        return false;
+    };
 }
 
 TestRunner::~TestRunner()
@@ -47,6 +54,18 @@ void TestRunner::add(const QString &path)
 
 bool TestRunner::exec(QStringList arguments)
 {
+
+    QCommandLineParser parser;
+
+    QCommandLineOption galleryOption (QStringList() << "gallery");
+    parser.addOption(galleryOption);
+    parser.process(arguments);
+
+    if (parser.isSet(galleryOption)) {
+        return runGallery(parser.positionalArguments());
+    }
+
+
     QObject *object;
     QVariant item;
     bool error = false;
@@ -171,6 +190,11 @@ bool TestRunner::run(QString path, const QStringList &arguments)
     return error;
 }
 
+bool TestRunner::runGallery(const QStringList &arguments)
+{
+    return m_gallery(arguments);
+}
+
 QVariantMap TestRunner::config() const
 {
     return m_config;
@@ -203,3 +227,7 @@ TestRunner *TestRunner::defautInstance()
     return m_defaultInstance;
 }
 
+void TestRunner::setGallery(std::function<bool(const QStringList &)> function)
+{
+    m_gallery = function;
+}

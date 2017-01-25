@@ -9,7 +9,6 @@ int main(int argc, char *argv[])
 
     TestRunner runner;
     runner.add<TestableUnitTests>();
-
     bool error = runner.exec(a.arguments());
 
     if (!error) {

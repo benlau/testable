@@ -45,6 +45,8 @@ public:
     /// Set a callback to be invoked when a QQmlEngine start
     void setEngineHook(Callback func);
 
+    void setGallery(std::function<bool(const QStringList&)> function);
+
 protected:
     virtual void execEngineHook(QQmlEngine* engine);
 
@@ -57,6 +59,8 @@ private:
     // Run Qt Quick Tests
     bool run(QString path, const QStringList& arguments);
 
+    bool runGallery(const QStringList& arguments);
+
     QVariantList m_testObjects;
 
     QStringList m_importPaths;
@@ -66,7 +70,10 @@ private:
     QVariantMap m_config;
 
     Callback m_engineHook;
+
+    std::function<bool(const QStringList &) > m_gallery;
 };
+
 
 template <typename T>
 void TestRunner::add()
