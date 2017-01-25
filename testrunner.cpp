@@ -231,3 +231,8 @@ void TestRunner::setGallery(std::function<bool(const QStringList &)> function)
 {
     m_gallery = function;
 }
+
+std::function<bool (const QStringList &)> TestRunner::gallery() const
+{
+    return m_gallery;
+}

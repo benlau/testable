@@ -3,6 +3,7 @@
 #include <QQmlApplicationEngine>
 #include <Automator>
 #include <ResourceGenerator>
+#include <TestRunner>
 #include "testableunittests.h"
 
 TestableUnitTests::TestableUnitTests(QObject *parent) : QObject(parent)
@@ -140,4 +141,31 @@ void TestableUnitTests::automatorWaitUntilSignal()
     QVERIFY(!Automator::waitUntilSignal(timer, SIGNAL(timeout())));
     QVERIFY(time.elapsed() >= 900);
 
+}
+
+void TestableUnitTests::gallery()
+{
+
+    TestRunner runner;
+    int count = 0;
+    QStringList args;
+
+    qDebug() << "Run default gallery function";
+    QVERIFY(runner.gallery()(QStringList()) == false);
+
+    runner.setGallery([&](const QStringList& arguments) {
+        args = arguments;
+        count++;
+        return true;
+    });
+
+    QVERIFY(runner.gallery()(QStringList()) == true);
+
+    QCOMPARE(count, 1);
+    QCOMPARE(args, QStringList());
+
+    QVERIFY(runner.exec(QStringList() << "app" << "--gallery" << "input.json"));
+
+    QCOMPARE(count, 2);
+    QCOMPARE(args, QStringList() << "input.json");
 }

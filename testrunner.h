@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QQmlEngine>
+#include <functional>
 /// Multiple test case runner
 
 class TestRunner
@@ -46,6 +47,8 @@ public:
     void setEngineHook(Callback func);
 
     void setGallery(std::function<bool(const QStringList&)> function);
+
+    std::function<bool(const QStringList&)> gallery() const;
 
 protected:
     virtual void execEngineHook(QQmlEngine* engine);

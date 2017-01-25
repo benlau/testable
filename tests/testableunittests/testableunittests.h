@@ -31,6 +31,8 @@ private slots:
 
     void automatorWaitUntilSignal();
 
+    void gallery();
+
 
 };
 
