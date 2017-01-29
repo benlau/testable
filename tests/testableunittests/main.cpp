@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QtCore>
+#include <QTest>
 #include <TestRunner>
 #include "testableunittests.h"
 

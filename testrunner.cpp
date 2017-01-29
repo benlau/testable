@@ -5,6 +5,7 @@
 #include <QPointer>
 #include <QCommandLineParser>
 #include "testrunner.h"
+#include "automator.h"
 
 static TestRunner *m_defaultInstance = 0;
 
@@ -59,12 +60,11 @@ bool TestRunner::exec(QStringList arguments)
 
     QCommandLineOption galleryOption (QStringList() << "gallery");
     parser.addOption(galleryOption);
-    parser.process(arguments);
+    parser.parse(arguments);
 
     if (parser.isSet(galleryOption)) {
         return runGallery(parser.positionalArguments());
     }
-
 
     QObject *object;
     QVariant item;
@@ -141,6 +141,7 @@ bool TestRunner::run(QObject *object, const QStringList& arguments)
         return false;
     }
 
+    qDebug() << params;
     return QTest::qExec(object,params);
 }
 
@@ -236,3 +237,4 @@ std::function<bool (const QStringList &)> TestRunner::gallery() const
 {
     return m_gallery;
 }
+
