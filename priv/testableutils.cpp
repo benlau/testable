@@ -51,21 +51,3 @@ static void registerTestableUtils() {
 }
 
 Q_COREAPP_STARTUP_FUNCTION(registerTestableUtils)
-
-
-static void enableAutoTest() {
-    /* This function do nothing. But that would enable
-     * autotest plugin panel in Qt Creator 4.1
-     */
-
-    auto ref = [=](){
-        int argc = 0;
-        char *argv[] = {0};
-        TestableUtils test;
-        QTest::qExec(&test, argc, argv);
-     };
-     Q_UNUSED(ref);
-}
-
-Q_COREAPP_STARTUP_FUNCTION(enableAutoTest)
-
