@@ -141,7 +141,6 @@ bool TestRunner::run(QObject *object, const QStringList& arguments)
         return false;
     }
 
-    qDebug() << params;
     return QTest::qExec(object,params);
 }
 
@@ -151,16 +150,15 @@ bool TestRunner::run(QString path, const QStringList &arguments)
     QString executable = args.takeAt(0);
     QStringList testcases = arguments.filter(QRegExp("::"));
 
-    QStringList tmp; // Filter all "-" parameter
+    QStringList nonOptionArgs; // Filter all "-" parameter
     foreach (QString arg, args) {
         if (arg.indexOf("-") != 0) {
-            tmp << arg;
+            nonOptionArgs << arg;
         }
     }
 
-    args = tmp;
-
-    if (args.size() !=0 && testcases.size() == 0) {
+    if (nonOptionArgs.size() !=0 && testcases.size() == 0) {
+        // If you non-option args, but not a quick test case. Return
         return false;
     }
 
@@ -168,7 +166,7 @@ bool TestRunner::run(QString path, const QStringList &arguments)
     paths << path;
     paths << m_importPaths;
 
-    char **s = (char**) malloc(sizeof(char*) * (10 + testcases.size() + paths.size() * 2));
+    char **s = (char**) malloc(sizeof(char*) * (10 + args.size() + paths.size() * 2));
     int idx = 0;
     s[idx++] = executable.toUtf8().data();
 
@@ -177,8 +175,8 @@ bool TestRunner::run(QString path, const QStringList &arguments)
         s[idx++] = strdup(p.toUtf8().data());
     }
 
-    foreach( QString testcase,testcases) {
-        s[idx++] = strdup(testcase.toUtf8().data());
+    foreach( QString arg,args) {
+        s[idx++] = strdup(arg.toUtf8().data());
     }
     s[idx++] = 0;
 

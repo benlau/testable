@@ -4,10 +4,15 @@
 #include "testrunner.h"
 #include "dummytests1.h"
 #include "dummytests2.h"
+#include <QtQuickTest>
 
 void callback(QQmlEngine* engine) {
     Q_UNUSED(engine);
     // You may register image provider here for QtTest
+}
+
+namespace AutoTest {
+    QUICK_TEST_MAIN(QuickTests)
 }
 
 int main(int argc, char *argv[])

@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    /* This function do nothing. But that could let Qt Creator
+    /* This function do nothing. But that could let Qt Creator autotest plugin to
      * detect available test cases
      */
     auto enableAutoTest = []{

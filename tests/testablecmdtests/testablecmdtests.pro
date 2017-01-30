@@ -19,7 +19,7 @@ SOURCES += \
     dummytests1.cpp \
     dummytests2.cpp
 
-DEFINES += SRCDIR=\\\"$$PWD/\\\"
+DEFINES += SRCDIR=\\\"$$PWD/\\\"  QUICK_TEST_SOURCE_DIR=\\\"$$PWD/\\\"
 
 include (../../testable.pri)
 
