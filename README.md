@@ -142,9 +142,7 @@ Auto Test Plugin
 
 Qt Creator could not detect the tests written by Testable automatically. And therefore it will show nothing in the "Tests" panel and you can't trigger test via AutoTest plugin.
 
-To make work, you have to declare the tests explicailly .
-
-e.g main.cpp
+To make it work, you have to declare the tests explicitly .
 
 ```
 class AutoTestRegister {
@@ -154,7 +152,24 @@ class AutoTestRegister {
 };
 ```
 
+The code does actually nothing but it is required for Autotest's parser to recognize the tests.
 
+Autotest does not allow to declare more than a test within a source file. So you have to add this piece of code per source file.
+
+For Qt Quick Tests, you need to declare QUICK_TEST_SOURCE_DIR in pro file:
+.pro file
+
+```
+DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD\\\"
+```
+
+Then place QUICK_TEST_MAIN on your code explicitly.
+
+```
+namespace AutoTestRegister {
+    QUICK_TEST_MAIN(QuickTests)
+}
+```
 
 
 
