@@ -137,3 +137,26 @@ Totals: 7 passed, 0 failed, 0 skipped, 0 blacklisted
 ********* Finished testing of QuickTests *********
 ```
 
+Auto Test Plugin
+================
+
+Qt Creator could not detect the tests written by Testable automatically. And therefore it will show nothing in the "Tests" panel and you can't trigger test via AutoTest plugin.
+
+To make work, you have to declare the tests explicailly .
+
+e.g main.cpp
+
+```
+class AutoTestRegister {
+    void ref() {
+        QTest::qExec((TestObject*)(0),0,0); // TestObject is your test object
+    }
+};
+```
+
+
+
+
+
+
+
