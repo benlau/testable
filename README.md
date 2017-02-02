@@ -137,27 +137,32 @@ Totals: 7 passed, 0 failed, 0 skipped, 0 blacklisted
 ********* Finished testing of QuickTests *********
 ```
 
-Auto Test Plugin
+Autotests Plugin
 ================
 
-Qt Creator could not detect the tests written by Testable automatically. And therefore it will show nothing in the "Tests" panel and you can't trigger test via AutoTest plugin.
+Qt Creator could not detect the tests written by Testable automatically. And therefore it will show nothing in the "Tests" panel and you can't trigger test via [Autotests](http://doc.qt.io/qtcreator/creator-autotest.html)
+ plugin.
 
-To make it work, you have to declare the tests explicitly .
+To make it work, you have to declare the test object explicitly .
 
 ```
-class AutoTestRegister {
-    void ref() {
-        QTest::qExec((TestObject*)(0),0,0); // TestObject is your test object
-    }
-};
+DummyTests1::DummyTests1(QObject *parent) : QObject(parent)
+{
+    auto ref = [=]() {
+        QTest::qExec(this, 0, 0); // Autotest detect available test cases of a QObject by looking for "QTest::qExec" in source code
+    };
+    Q_UNUSED(ref);
+}
 ```
 
 The code does actually nothing but it is required for Autotest's parser to recognize the tests.
 
-Autotest does not allow to declare more than a test within a source file. So you have to add this piece of code per source file.
+Autotests does not allow to declare more than a test within a source file. So you have to add this piece of code per source file.
 
 For Qt Quick Tests, you need to declare QUICK_TEST_SOURCE_DIR in pro file:
-.pro file
+
+
+project.pro file
 
 ```
 DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD\\\"
@@ -169,6 +174,8 @@ Then place QUICK_TEST_MAIN on your code explicitly.
 namespace AutoTestRegister {
     QUICK_TEST_MAIN(QuickTests)
 }
+
+int main(int argc, char *argv[]) {
 ```
 
 
