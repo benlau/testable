@@ -4,11 +4,11 @@ Testable - Qt/QML Unit Test Utilities
 
 Qt offers two testing frameworks : [QTest](http://doc.qt.io/qt-5/qtest.html) for C++ and [Qt Quick Test](http://doc.qt.io/qt-5/qtquick-qtquicktest.html) for QML. Testable is an utililiy library to enhance their function.
 
-The features:
+Features:
 
 1. Support to run tests from mutiple QObjects
-2. Support to run QTest (C++) and Quick Tests (QML) in a single project
-3. Run specific test case / test object by command line
+2. Support to run QTest (C++) and Quick Tests (QML) in a same project
+3. Run specific test case / test object by command line and autotests plugin
 4. Utilities to search QQuickItem from Repeater/Flickable/ListView/GridView
 
 Classes
@@ -26,6 +26,8 @@ Example
 =======
 
 ```
+#include <TestRunner>
+
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc,argv);
