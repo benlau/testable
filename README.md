@@ -178,6 +178,7 @@ namespace AutoTestRegister {
 int main(int argc, char *argv[]) {
 ```
 
+![Autotests Screenshot](https://raw.githubusercontent.com/benlau/testable/master/docs/screenshot1.png)
 
 
 
