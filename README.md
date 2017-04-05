@@ -169,9 +169,11 @@ project.pro file
 DEFINES += QUICK_TEST_SOURCE_DIR=\\\"$$PWD\\\"
 ```
 
-Then place QUICK_TEST_MAIN on your code explicitly.
+Then place QUICK_TEST_MAIN in your main.cpp explicitly.
 
 ```
+#include <QtQuickTest/quicktest.h>
+
 namespace AutoTestRegister {
     QUICK_TEST_MAIN(QuickTests)
 }
