@@ -6,11 +6,14 @@
 #include <QCommandLineParser>
 #include "testrunner.h"
 #include "automator.h"
+#include "priv/objectutils.h"
 
 static TestRunner *m_defaultInstance = 0;
 
 TestRunner::TestRunner()
 {
+    m_eventLoopFlag = false;
+
     if (m_defaultInstance == 0) {
         m_defaultInstance = this;
     }
@@ -53,35 +56,40 @@ void TestRunner::add(const QString &path)
     add(QVariant(path));
 }
 
-void TestRunner::addGallery(QObject *object)
-{
-    add(object);
-    m_galleryObjects << object;
-}
-
 bool TestRunner::exec(QStringList arguments)
 {
+    m_arguments = arguments;
+
     QCommandLineParser parser;
 
     QCommandLineOption galleryOption (QStringList() << "gallery");
     parser.addOption(galleryOption);
+
+    QCommandLineOption eventLoopOption(QStringList() << "eventloop");
+    parser.addOption(eventLoopOption);
+
     parser.parse(arguments);
 
     if (parser.isSet(galleryOption)) {
         return runGallery(parser.positionalArguments());
     }
 
+    if (parser.isSet(eventLoopOption)) {
+        setEventLoopFlag(true);
+        m_arguments.clear();
+        m_arguments << arguments[0] << parser.positionalArguments();
+    }
+
     QObject *object;
     QVariant item;
     bool error = false;
-    m_arguments = arguments;
 
     foreach (item,m_testObjects) {
         object = item.value<QObject*>();
         if (object) {
-            error |= run(object, arguments);
+            error |= run(object, m_arguments);
         } else if (item.type() == (int) QMetaType::QString) {
-            error |= run(item.toString(), arguments);
+            error |= run(item.toString(), m_arguments);
         }
     }
 
@@ -199,6 +207,16 @@ bool TestRunner::runGallery(const QStringList &arguments)
     return m_gallery(arguments);
 }
 
+bool TestRunner::eventLoopFlag() const
+{
+    return m_eventLoopFlag;
+}
+
+void TestRunner::setEventLoopFlag(bool eventLoopFlag)
+{
+    m_eventLoopFlag = eventLoopFlag;
+}
+
 QVariantMap TestRunner::config() const
 {
     return m_config;
@@ -239,5 +257,15 @@ void TestRunner::setGallery(std::function<bool(const QStringList &)> function)
 std::function<bool (const QStringList &)> TestRunner::gallery() const
 {
     return m_gallery;
+}
+
+void TestRunner::runEventloop()
+{
+    if (!m_eventLoopFlag) {
+        return;
+    }
+
+    QEventLoop loop;
+    loop.exec();
 }
 

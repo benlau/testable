@@ -21,10 +21,6 @@ public:
     /// Add a QObject test suite
     template <typename T> void add();
 
-
-    void addGallery(QObject* object);
-    template <typename T> void addGallery();
-
     /// Execute test case with arguments
     bool exec(QStringList arguments);
 
@@ -54,6 +50,13 @@ public:
 
     std::function<bool(const QStringList&)> gallery() const;
 
+    /// Run event loop if --eventloop flag is set by command line
+    void runEventloop();
+
+    bool eventLoopFlag() const;
+
+    void setEventLoopFlag(bool eventLoopFlag);
+
 protected:
     virtual void execEngineHook(QQmlEngine* engine);
 
@@ -70,24 +73,18 @@ private:
 
     QVariantList m_testObjects;
 
-    QObjectList m_galleryObjects;
-
     QStringList m_importPaths;
 
     QStringList m_arguments;
 
     QVariantMap m_config;
 
+    bool m_eventLoopFlag;
+
     Callback m_engineHook;
 
     std::function<bool(const QStringList &) > m_gallery;
 };
-
-template<typename T>
-void TestRunner::addGallery()
-{
-    addGallery(new T());
-}
 
 template <typename T>
 void TestRunner::add()

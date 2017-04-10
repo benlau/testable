@@ -18,6 +18,11 @@ script:
     - ls
     - ./testableunittests
     - cd -
+    - cd tests/testableruntests
+    - qmake
+    - make
+    - ./testableruntests
+    - cd -
     - cd tests/testablecmdtests
     - qmake
     - make
