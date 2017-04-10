@@ -17,8 +17,10 @@ int main(int argc, char *argv[])
     Q_UNUSED(enableAutoTest);
 
     TestRunner runner;
-    runner.add<TestableUnitTests>();
-    bool error = runner.exec(a.arguments());
+    runner.add<TestableUnitTests>();    
+    bool error = false;
+
+    error |= runner.exec(a.arguments());
 
     if (!error) {
         qWarning() << "All test cases passed!";

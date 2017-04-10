@@ -31,3 +31,5 @@ html
 
 tests/quickandroidactivitytests/tests/bin/*
 tests/quickandroidactivitytests/tests/gen/*
+*.qmlc
+*.jsc

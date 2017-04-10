@@ -53,9 +53,14 @@ void TestRunner::add(const QString &path)
     add(QVariant(path));
 }
 
+void TestRunner::addGallery(QObject *object)
+{
+    add(object);
+    m_galleryObjects << object;
+}
+
 bool TestRunner::exec(QStringList arguments)
 {
-
     QCommandLineParser parser;
 
     QCommandLineOption galleryOption (QStringList() << "gallery");

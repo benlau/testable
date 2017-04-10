@@ -8,7 +8,10 @@
 
 TestableUnitTests::TestableUnitTests(QObject *parent) : QObject(parent)
 {
-
+    auto ref = [=]() {
+        QTest::qExec(this, 0, 0); // Autotest detect available test cases of a QObject by looking for "QTest::qExec" in source code
+    };
+    Q_UNUSED(ref);
 }
 
 void TestableUnitTests::resourceGenerator()
@@ -22,7 +25,7 @@ void TestableUnitTests::resourceGenerator()
     qDebug() << generator.text();
 
     QVERIFY(!generator.text().isEmpty());
-    QVERIFY(generator.save("resource.qrc"));
+    QVERIFY(generator.save(QDir::currentPath() + "/resource.qrc"));
 }
 
 void TestableUnitTests::automatorSearchWindow()
@@ -140,7 +143,6 @@ void TestableUnitTests::automatorWaitUntilSignal()
     time.start();
     QVERIFY(!Automator::waitUntilSignal(timer, SIGNAL(timeout())));
     QVERIFY(time.elapsed() >= 900);
-
 }
 
 void TestableUnitTests::gallery()

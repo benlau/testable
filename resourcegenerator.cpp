@@ -59,6 +59,7 @@ bool ResourceGenerator::save(const QString &path)
 {
     QFile file(path);
     if (!file.open(QIODevice::WriteOnly)) {
+        qWarning() << "Failed to open" << path;
         return false;
     }
 
