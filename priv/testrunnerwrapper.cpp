@@ -22,7 +22,7 @@ TestRunnerWrapper::TestRunnerWrapper(QObject *parent) : QObject(parent)
 QStringList TestRunnerWrapper::arguments() const
 {
     QStringList res;
-    TestRunner* runner = TestRunner::defautInstance();
+    TestRunner* runner = TestRunner::defaultInstance();
 
     if (runner) {
         res = runner->arguments();
@@ -34,7 +34,7 @@ QStringList TestRunnerWrapper::arguments() const
 QVariantMap TestRunnerWrapper::config() const
 {
     QVariantMap res;
-    TestRunner* runner = TestRunner::defautInstance();
+    TestRunner* runner = TestRunner::defaultInstance();
     if (runner) {
         res = runner->config();
     }
@@ -52,7 +52,7 @@ static QObject *provider(QQmlEngine *engine, QJSEngine *scriptEngine) {
 
     TestRunnerWrapper* object = new TestRunnerWrapper();
 
-    TestRunner* runner = TestRunner::defautInstance();
+    TestRunner* runner = TestRunner::defaultInstance();
     if (runner) {
         TestRunnerHookHelper *helper = static_cast<TestRunnerHookHelper*>(runner);
         helper->execEngineHook(engine);

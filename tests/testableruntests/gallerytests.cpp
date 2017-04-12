@@ -12,7 +12,7 @@ GalleryTests::GalleryTests(QObject *parent) : QObject(parent)
 void GalleryTests::test1()
 {
     executedTests << QTest::currentTestFunction();
-    TestRunner::defautInstance()->runEventloop();
+    TestRunner::defaultInstance()->runEventLoop();
 }
 
 void GalleryTests::test2()

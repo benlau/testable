@@ -244,7 +244,7 @@ QStringList TestRunner::arguments() const
     return m_arguments;
 }
 
-TestRunner *TestRunner::defautInstance()
+TestRunner *TestRunner::defaultInstance()
 {
     return m_defaultInstance;
 }
@@ -259,7 +259,7 @@ std::function<bool (const QStringList &)> TestRunner::gallery() const
     return m_gallery;
 }
 
-void TestRunner::runEventloop()
+void TestRunner::runEventLoop()
 {
     if (!m_eventLoopFlag) {
         return;

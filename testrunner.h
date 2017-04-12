@@ -34,7 +34,7 @@ public:
     QStringList arguments() const;
 
     /// Get the default instance of TestRunner (The first declared TestRunner)
-    static TestRunner* defautInstance();
+    static TestRunner* defaultInstance();
 
     QVariantMap config() const;
 
@@ -51,7 +51,7 @@ public:
     std::function<bool(const QStringList&)> gallery() const;
 
     /// Run event loop if --eventloop flag is set by command line
-    void runEventloop();
+    void runEventLoop();
 
     bool eventLoopFlag() const;
 
