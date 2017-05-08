@@ -2,7 +2,6 @@
 #include <QTest>
 #include <QQmlApplicationEngine>
 #include <Automator>
-#include <ResourceGenerator>
 #include <TestRunner>
 #include "testableunittests.h"
 
@@ -12,20 +11,6 @@ TestableUnitTests::TestableUnitTests(QObject *parent) : QObject(parent)
         QTest::qExec(this, 0, 0); // Autotest detect available test cases of a QObject by looking for "QTest::qExec" in source code
     };
     Q_UNUSED(ref);
-}
-
-void TestableUnitTests::resourceGenerator()
-{
-    ResourceGenerator generator;
-    QDir dir;
-    generator.setRoot(dir.currentPath());
-    generator.scan("/Testable", QString(SRCDIR) + "../testableunittests");
-    generator.scan("/Testable2", QString(SRCDIR) + "../testableunittests");
-
-    qDebug() << generator.text();
-
-    QVERIFY(!generator.text().isEmpty());
-    QVERIFY(generator.save(QDir::currentPath() + "/resource.qrc"));
 }
 
 void TestableUnitTests::automatorSearchWindow()

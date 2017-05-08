@@ -28,4 +28,5 @@ DISTFILES += \
     TestableCaseTests.qml \
     TestableCaseFailTests.qml \
     AutomatorCreateTracker.qml \
-    Dummy.qml
+    Dummy.qml \
+    ../../README.md

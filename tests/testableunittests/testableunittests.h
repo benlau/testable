@@ -14,8 +14,6 @@ signals:
 public slots:
 
 private slots:
-    void resourceGenerator();
-
     void automatorSearchWindow();
 
     void automatorObtainSingletonObject();
