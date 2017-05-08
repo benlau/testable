@@ -1,23 +1,9 @@
 #include <QMap>
 #include <QQuickItem>
 #include "objectutils.h"
+#include "testablefunctions.h"
 
-bool Testable::ObjectUtils::inherited(QObject *object, const QString &className)
-{
-    bool res = false;
-
-    const QMetaObject *metaObject = object->metaObject();
-
-    while (metaObject) {
-        if (metaObject->className() == className) {
-            res = true;
-            break;
-        }
-        metaObject = metaObject->superClass();
-    }
-
-    return res;
-}
+using namespace Testable;
 
 QObjectList Testable::ObjectUtils::uniq(const QObjectList &list)
 {
@@ -46,7 +32,7 @@ QObjectList Testable::ObjectUtils::allChildren(QObject *object)
         result.append(allChildren(child));
     }
 
-    if (ObjectUtils::inherited(object, "QQuickFlickable") || ObjectUtils::inherited(object, "QQuickWindow")) {
+    if (inherited(object, "QQuickFlickable") || inherited(object, "QQuickWindow")) {
         QQuickItem* contentItem = object->property("contentItem").value<QQuickItem*>();
         if (contentItem) {
 

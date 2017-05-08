@@ -7,6 +7,7 @@
 #include <QSignalSpy>
 #include "automator.h"
 #include "priv/objectutils.h"
+#include "testablefunctions.h"
 
 using namespace Testable;
 
@@ -291,7 +292,7 @@ QObjectList Automator::findObjects(QObject *object, QString objectName)
         result << object;
     }
 
-    if (ObjectUtils::inherited(object,"QQuickRepeater")) {
+    if (inherited(object,"QQuickRepeater")) {
         int count = object->property("count").toInt();
 
         for (int i = 0 ;  i < count ;i++) {
@@ -305,7 +306,7 @@ QObjectList Automator::findObjects(QObject *object, QString objectName)
             }
         }
 
-    } else if (ObjectUtils::inherited(object, "QQuickFlickable") || ObjectUtils::inherited(object, "QQuickWindow")) {
+    } else if (inherited(object, "QQuickFlickable") || inherited(object, "QQuickWindow")) {
 
         QQuickItem* contentItem = object->property("contentItem").value<QQuickItem*>();
 
