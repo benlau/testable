@@ -14,6 +14,9 @@ signals:
 public slots:
 
 private slots:
+
+    void test_walk();
+
     void automatorSearchWindow();
 
     void automatorObtainSingletonObject();
@@ -23,7 +26,6 @@ private slots:
     void automatorRunTestCase_fails();
 
     void automatorRunTestCase_onNonRootObject();
-
 
     void autmatorCreatorTracker();
 

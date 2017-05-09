@@ -29,6 +29,7 @@ DISTFILES += \
     TestableCaseFailTests.qml \
     AutomatorCreateTracker.qml \
     Dummy.qml \
-    ../../README.md
+    ../../README.md \
+    SnapshotSample1.qml
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000

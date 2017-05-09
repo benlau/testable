@@ -4,6 +4,7 @@
 #include <Automator>
 #include <TestRunner>
 #include "testableunittests.h"
+#include "testablefunctions.h"
 
 TestableUnitTests::TestableUnitTests(QObject *parent) : QObject(parent)
 {
@@ -11,6 +12,21 @@ TestableUnitTests::TestableUnitTests(QObject *parent) : QObject(parent)
         QTest::qExec(this, 0, 0); // Autotest detect available test cases of a QObject by looking for "QTest::qExec" in source code
     };
     Q_UNUSED(ref);
+}
+
+void TestableUnitTests::test_walk()
+{
+
+    QQmlApplicationEngine engine;
+    engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/SnapshotSample1.qml"));
+
+    int count = 0;
+    Testable::walk(engine.rootObjects()[0], [&](QObject* object) {
+        count++;
+        return true;
+    });
+
+    QCOMPARE(count, 4);
 }
 
 void TestableUnitTests::automatorSearchWindow()
