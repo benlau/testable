@@ -21,12 +21,25 @@ void TestableUnitTests::test_walk()
     engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/SnapshotSample1.qml"));
 
     int count = 0;
-    Testable::walk(engine.rootObjects()[0], [&](QObject* object) {
+    Testable::walk(engine.rootObjects()[0], [&](QObject* object, QObject* parent) {
+        Q_UNUSED(object);
+        Q_UNUSED(parent);
         count++;
         return true;
     });
 
     QCOMPARE(count, 4);
+}
+
+void TestableUnitTests::test_snapshot()
+{
+    QQmlApplicationEngine engine;
+    engine.load(QUrl::fromLocalFile(QString(SRCDIR) + "/SnapshotSample1.qml"));
+
+    QVariantMap data = Testable::snapshot(engine.rootObjects()[0]);
+
+    QVERIFY(data.contains("___children___"));
+
 }
 
 void TestableUnitTests::automatorSearchWindow()

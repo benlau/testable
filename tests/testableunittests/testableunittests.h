@@ -17,6 +17,8 @@ private slots:
 
     void test_walk();
 
+    void test_snapshot();
+
     void automatorSearchWindow();
 
     void automatorObtainSingletonObject();

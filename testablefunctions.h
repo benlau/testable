@@ -7,6 +7,8 @@ namespace Testable {
     bool inherited(QObject *object, const QString &className);
 
     /// Walk on a QML tree structure
-    void walk(QObject* object, std::function<bool(QObject*)> predicate);
+    void walk(QObject* object, std::function<bool(QObject*, QObject*)> predicate);
+
+    QVariantMap snapshot(QObject* object);
 
 }

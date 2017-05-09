@@ -19,13 +19,13 @@ bool Testable::inherited(QObject *object, const QString &className)
     return res;
 }
 
-void Testable::walk(QObject *object, std::function<bool (QObject *)> predicate)
+void Testable::walk(QObject *object, std::function<bool (QObject *, QObject*)> predicate)
 {
     QMap<QObject*, bool> map;
 
-    std::function<bool(QObject*)> _walk;
+    std::function<bool(QObject*, QObject*)> _walk;
 
-    _walk = [&](QObject* object) -> bool {
+    _walk = [&](QObject* object, QObject* parent) -> bool {
 
         if (!object || map[object]) {
             return true;
@@ -33,7 +33,7 @@ void Testable::walk(QObject *object, std::function<bool (QObject *)> predicate)
 
         map[object] = true;
 
-        if (!predicate(object)) {
+        if (!predicate(object, parent)) {
             return false;
         }
 
@@ -46,7 +46,7 @@ void Testable::walk(QObject *object, std::function<bool (QObject *)> predicate)
                                           Q_RETURN_ARG(QQuickItem*,item),
                                           Q_ARG(int,i));
 
-                if (!_walk(item)) {
+                if (!_walk(item, object)) {
                     return false;
                 }
             }
@@ -54,14 +54,11 @@ void Testable::walk(QObject *object, std::function<bool (QObject *)> predicate)
         } else if (inherited(object, "QQuickFlickable") || inherited(object, "QQuickWindow")) {
 
             QQuickItem* contentItem = object->property("contentItem").value<QQuickItem*>();
-            qDebug() << "content item" << contentItem;
 
             if (contentItem) {
                 QList<QQuickItem *>items = contentItem->childItems() ;
-
                 for (int i = 0 ;  i < items.size() ; i++) {
-                    qDebug() << "i" << i;
-                    if (!_walk(items.at(i))){
+                    if (!_walk(items.at(i) , object)){
                         return false;
                     }
                 }
@@ -71,7 +68,7 @@ void Testable::walk(QObject *object, std::function<bool (QObject *)> predicate)
         QObjectList children = object->children();
 
         for (int i = 0 ; i < children.size();i++) {
-            if (!_walk(children.at(i))) {
+            if (!_walk(children.at(i), object)) {
                 return false;
             }
         }
@@ -79,5 +76,68 @@ void Testable::walk(QObject *object, std::function<bool (QObject *)> predicate)
         return true;
     };
 
-    _walk(object);
+    _walk(object, 0);
+}
+
+#define CHILDREN_KEY "___children___"
+
+QVariantMap Testable::snapshot(QObject *object)
+{
+    QMap<QObject*, QVariantMap> map;
+
+    QMap<QObject*, QObject*> parentTable;
+
+    QList<QObject*> backtrace;
+
+    auto capture = [=](QObject* source) {
+        QVariantMap dest;
+        const QMetaObject* meta = source->metaObject();
+
+        for (int i = 0 ; i < meta->propertyCount(); i++) {
+            const QMetaProperty property = meta->property(i);
+            const char* name = property.name();
+            QString stringName = name;
+
+            QVariant value = source->property(name);
+
+            if (value.canConvert<QObject*>()) {
+                continue;
+            }
+            dest[stringName] = value;
+        }
+        return dest;
+    };
+
+    //@TODO - implement backtrace
+
+    auto traveler = [&](QObject* object, QObject* parent) {
+        parentTable[object] = parent;
+
+        QVariantMap data = capture(object);
+        map[object] = data;
+        backtrace << object;
+        return true;
+    };
+
+    walk(object, traveler);
+
+    while (backtrace.size() > 0) {
+        auto node = backtrace.takeLast();
+        auto parent = parentTable[node];
+        if (!parent) {
+            break;
+        }
+
+        QVariantMap pData = map[parent];
+        QVariantList children;
+        if (!pData.contains(CHILDREN_KEY)) {
+            children = pData[CHILDREN_KEY].toList();
+        }
+
+         children << map[node];
+         pData[CHILDREN_KEY] = children;
+         map[parent] = pData;
+    }
+
+    return map[object];
 }
