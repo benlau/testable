@@ -4,6 +4,7 @@
 #include <QPointer>
 #include <QQuickItem>
 #include <QPointF>
+#include <QTime>
 
 /// Automator provides an interface to manipulate UI object loaded by QQmlApplicationEngine
 
@@ -25,9 +26,6 @@ public:
 
     bool waitExists(QString objectName,int timeout = 1000);
 
-
-    bool waitUntil(QString objectName, QString property, QVariant value, int timeout = 1000);
-
     // If the point paremter is missed. It will hit the center point
     bool click(QQuickItem *item,  int delay = 100, QPointF point = QPointF());
 
@@ -48,10 +46,26 @@ public:
 
     QQuickItem* createTracker(QQuickItem* target,QColor color, qreal opacity = 0.3);
 
+    bool waitUntil(QString objectName, QString property, QVariant value, int timeout = 1000);
+
     static bool waitUntil(QObject *object, QString property, QVariant value,int timeout = 1000);
 
     /// Wait until a signal is emietted from object
     static bool waitUntilSignal(QObject *object, const char* signal, int timeout = 1000);
+
+    template <typename Functor>
+    bool waitUntil(Functor functor, int timeout = -1) {
+        QTime time;
+        time.start();
+
+        while (!functor()) {
+            Automator::wait(10);
+            if (timeout > 0 && time.elapsed() > timeout) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 private slots:
     void onWarnings(QList<QQmlError>);

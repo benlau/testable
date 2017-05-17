@@ -108,8 +108,6 @@ QVariantMap Testable::snapshot(QObject *object)
         return dest;
     };
 
-    //@TODO - implement backtrace
-
     auto traveler = [&](QObject* object, QObject* parent) {
         parentTable[object] = parent;
 
