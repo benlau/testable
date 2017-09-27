@@ -36,4 +36,5 @@ DISTFILES += \
     ../../README.md \
     tst_quicktests.qml \
     tst_Testable.qml \
-    ItemWithError.qml
+    ItemWithError.qml \
+    tst_ContextProperty.qml

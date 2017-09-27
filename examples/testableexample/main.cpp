@@ -1,6 +1,7 @@
 #include <QtCore>
 #include <QGuiApplication>
 #include <QQmlEngine>
+#include <QQmlContext>
 #include "testrunner.h"
 #include "dummytests1.h"
 #include "dummytests2.h"
@@ -9,6 +10,11 @@
 
 void callback(QQmlEngine* engine) {
     Q_UNUSED(engine);
+
+    QVariantMap property;
+    property["value1"] = 1;
+    engine->rootContext()->setContextProperty("CustomProperty", property);
+
     // You may register image provider here for QtTest
 }
 
