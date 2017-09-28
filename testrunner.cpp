@@ -12,19 +12,11 @@ static TestRunner *m_defaultInstance = 0;
 
 TestRunner::TestRunner()
 {
-    m_eventLoopFlag = false;
-
     if (m_defaultInstance == 0) {
         m_defaultInstance = this;
     }
 
     m_engineHook = 0;
-
-    m_gallery = [](const QStringList& arguments) {
-        Q_UNUSED(arguments);
-        qWarning() << "TestRunner: Gallery function is not set";
-        return false;
-    };
 }
 
 TestRunner::~TestRunner()
@@ -59,26 +51,6 @@ void TestRunner::add(const QString &path)
 bool TestRunner::exec(QStringList arguments)
 {
     m_arguments = arguments;
-
-    QCommandLineParser parser;
-
-    QCommandLineOption galleryOption (QStringList() << "gallery");
-    parser.addOption(galleryOption);
-
-    QCommandLineOption eventLoopOption(QStringList() << "eventloop");
-    parser.addOption(eventLoopOption);
-
-    parser.parse(arguments);
-
-    if (parser.isSet(galleryOption)) {
-        return runGallery(parser.positionalArguments());
-    }
-
-    if (parser.isSet(eventLoopOption)) {
-        setEventLoopFlag(true);
-        m_arguments.clear();
-        m_arguments << arguments[0] << parser.positionalArguments();
-    }
 
     QObject *object;
     QVariant item;
@@ -196,25 +168,11 @@ bool TestRunner::run(QString path, const QStringList &arguments)
     const char *name = "QuickTests";
     const char *source = strdup(path.toUtf8().data());
 
+
     bool error = quick_test_main( idx-1, s, name, source);
     free(s);
 
     return error;
-}
-
-bool TestRunner::runGallery(const QStringList &arguments)
-{
-    return m_gallery(arguments);
-}
-
-bool TestRunner::eventLoopFlag() const
-{
-    return m_eventLoopFlag;
-}
-
-void TestRunner::setEventLoopFlag(bool eventLoopFlag)
-{
-    m_eventLoopFlag = eventLoopFlag;
 }
 
 QVariantMap TestRunner::config() const
@@ -247,25 +205,5 @@ QStringList TestRunner::arguments() const
 TestRunner *TestRunner::defaultInstance()
 {
     return m_defaultInstance;
-}
-
-void TestRunner::setGallery(std::function<bool(const QStringList &)> function)
-{
-    m_gallery = function;
-}
-
-std::function<bool (const QStringList &)> TestRunner::gallery() const
-{
-    return m_gallery;
-}
-
-void TestRunner::runEventLoop()
-{
-    if (!m_eventLoopFlag) {
-        return;
-    }
-
-    QEventLoop loop;
-    loop.exec();
 }
 

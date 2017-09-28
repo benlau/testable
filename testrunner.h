@@ -46,17 +46,6 @@ public:
     /// Set a callback to be invoked when a QQmlEngine start
     void setEngineHook(Callback func);
 
-    void setGallery(std::function<bool(const QStringList&)> function);
-
-    std::function<bool(const QStringList&)> gallery() const;
-
-    /// Run event loop if --eventloop flag is set by command line
-    void runEventLoop();
-
-    bool eventLoopFlag() const;
-
-    void setEventLoopFlag(bool eventLoopFlag);
-
 protected:
     virtual void execEngineHook(QQmlEngine* engine);
 
@@ -79,11 +68,7 @@ private:
 
     QVariantMap m_config;
 
-    bool m_eventLoopFlag;
-
     Callback m_engineHook;
-
-    std::function<bool(const QStringList &) > m_gallery;
 };
 
 template <typename T>
