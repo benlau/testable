@@ -41,10 +41,8 @@ public:
     /// Set config variables that will be passed to QML application via TestRunner singleton object
     void setConfig(const QVariantMap &config);
 
-    typedef void (*Callback)(QQmlEngine* engine);
-
     /// Set a callback to be invoked when a QQmlEngine start
-    void setEngineHook(Callback func);
+    void setEngineHook(std::function<void(QQmlEngine*)> func);
 
 protected:
     virtual void execEngineHook(QQmlEngine* engine);
@@ -68,7 +66,7 @@ private:
 
     QVariantMap m_config;
 
-    Callback m_engineHook;
+    std::function<void(QQmlEngine*)> m_engineHook;
 };
 
 template <typename T>

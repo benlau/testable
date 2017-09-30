@@ -192,7 +192,7 @@ void TestRunner::execEngineHook(QQmlEngine *engine)
     }
 }
 
-void TestRunner::setEngineHook(TestRunner::Callback func)
+void TestRunner::setEngineHook(std::function<void(QQmlEngine*)> func)
 {
     m_engineHook = func;
 }

@@ -8,16 +8,6 @@
 #include "qmltests.h"
 #include "benchmarktests.h"
 
-void callback(QQmlEngine* engine) {
-    Q_UNUSED(engine);
-
-    QVariantMap property;
-    property["value1"] = 1;
-    engine->rootContext()->setContextProperty("CustomProperty", property);
-
-    // You may register image provider here for QtTest
-}
-
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc,argv);
@@ -33,7 +23,14 @@ int main(int argc, char *argv[])
     runner.add(QString(SRCDIR));
 
     runner.addImportPath("qrc:///");
-    runner.setEngineHook(callback);
+    runner.setEngineHook([](QQmlEngine* engine) {
+
+        // You may register image provider / context property here for QtTest
+
+        QVariantMap property;
+        property["value1"] = 1;
+        engine->rootContext()->setContextProperty("CustomProperty", property);
+    });
 
     bool error = runner.exec(app.arguments());
 
