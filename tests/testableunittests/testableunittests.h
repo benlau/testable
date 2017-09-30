@@ -23,14 +23,6 @@ private slots:
 
     void automatorObtainSingletonObject();
 
-    void automatorRunTestCase();
-
-    void automatorRunTestCase_fails();
-
-    void automatorRunTestCase_onNonRootObject();
-
-    void autmatorCreatorTracker();
-
     void automatorWaitUntilSignal();
 };
 

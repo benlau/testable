@@ -21,10 +21,4 @@ SOURCES += \
     $$PWD/priv/objectutils.cpp \
     $$PWD/testablefunctions.cpp
 
-DISTFILES += \
-    $$PWD/Testable/TestableCase.qml \
-    $$PWD/Testable/qmldir
-
-RESOURCES += \
-    $$PWD/testable.qrc
-
+DISTFILES +=

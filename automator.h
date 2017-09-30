@@ -40,11 +40,7 @@ public:
 
     void setAnyError(bool anyError);
 
-    bool runTestCase(QStringList filters = QStringList()) const;
-
     QObject* obtainSingletonObject(QString package, int versionMajor, int versionMinor, QString typeName);
-
-    QQuickItem* createTracker(QQuickItem* target,QColor color, qreal opacity = 0.3);
 
     bool waitUntil(QString objectName, QString property, QVariant value, int timeout = 1000);
 

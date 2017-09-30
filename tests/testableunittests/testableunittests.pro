@@ -25,8 +25,6 @@ DISTFILES += \
     PackageA/example.js \
     PackageA/qmldir \
     PackageA/Store.qml \
-    TestableCaseTests.qml \
-    TestableCaseFailTests.qml \
     AutomatorCreateTracker.qml \
     Dummy.qml \
     ../../README.md \

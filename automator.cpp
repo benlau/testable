@@ -359,33 +359,6 @@ void Automator::setAnyError(bool anyError)
     m_anyError = anyError;
 }
 
-bool Automator::runTestCase(QStringList filters) const
-{
-    QObjectList list = ObjectUtils::allChildren(m_engine->rootObjects());
-    bool res = true;
-
-    for (int i = 0 ; i < list.size() ; i++) {
-        QObject* object = list.at(i);
-        QString className = object->metaObject()->className();
-
-        if (className.indexOf("TestableCase_QMLTYPE") == 0) {
-
-            if (filters.size() == 0 ||
-                hasMethods(object,filters)) {
-
-                invokeTestableCase(m_engine.data(), object, filters);
-            }
-        }
-
-        bool hasError = object->property("hasError").toBool();
-        if (hasError) {
-            res = false;
-        }
-    }
-
-    return res;
-}
-
 QObject* Automator::obtainSingletonObject(QString package, int versionMajor, int versionMinor, QString typeName)
 {
     /// Modified from QFAppDispatcher::singletonObject() in QuickFlux project
@@ -414,25 +387,6 @@ QObject* Automator::obtainSingletonObject(QString package, int versionMajor, int
     }
 
     return object;
-}
-
-QQuickItem *Automator::createTracker(QQuickItem *target, QColor color, qreal opacity)
-{
-    QString qml  = "import QtQuick 2.0\nRectangle {anchors.centerIn:parent; width: parent ? parent.width: 0; height:parent ? parent.height : 0; }";
-
-    QQuickItem* tracker = 0;
-
-    QQmlComponent comp (m_engine.data());
-    comp.setData(qml.toUtf8(),QUrl());
-    tracker = qobject_cast<QQuickItem*>(comp.create());
-
-    Q_ASSERT(tracker);
-
-    tracker->setParentItem(target);
-    tracker->setProperty("color", color);
-    tracker->setProperty("opacity", opacity);
-
-    return tracker;
 }
 
 void Automator::onWarnings(QList<QQmlError> warnings)

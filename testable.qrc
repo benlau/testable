@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>Testable/TestableCase.qml</file>
-        <file>Testable/qmldir</file>
-    </qresource>
-</RCC>
