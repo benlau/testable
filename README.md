@@ -2,14 +2,15 @@ Testable - Qt/QML Unit Test Utilities
 =======================
 [![Build Status](https://travis-ci.org/benlau/testable.svg?branch=master)](https://travis-ci.org/benlau/testable)
 
-Qt offers two testing frameworks : [QTest](http://doc.qt.io/qt-5/qtest.html) for C++ and [Qt Quick Test](http://doc.qt.io/qt-5/qtquick-qtquicktest.html) for QML. Testable is an utililiy library to enhance their function.
+Testable is an utility library to enhance the function of the two testing frameworks offered by Qt: [QTest](http://doc.qt.io/qt-5/qtest.html) for C++ and [Qt Quick Test](http://doc.qt.io/qt-5/qtquick-qtquicktest.html) for QML. 
 
 Features:
 
 1. Support to run tests from mutiple QObjects
-2. Support to run QTest (C++) and Quick Tests (QML) in a same project
-3. Run specific test case / test object by command line and autotests plugin
-4. Utilities to search QQuickItem from Repeater/Flickable/ListView/GridView
+1. Support to run QTest (C++) and Quick Tests (QML) in a same project
+1. Run specific test case / test object by command line and autotests plugin
+1. Setup custom property and image provider for Qt Quick Test by using engine hook function
+1. Utilities to search QQuickItem from Repeater/Flickable/ListView/GridView
 
 Classes
 
@@ -39,7 +40,9 @@ int main(int argc, char *argv[])
     runner.add(QString(SRCDIR));
 
     runner.addImportPath("qrc:///");
-    runner.setEngineHook(callback);
+    runner.setEngineHook([](QQmlEngine* engine) {
+      engine->rootContext->setContextProperty("MyCustomProperty", new QObject());
+    });
 
     bool error = runner.exec(app.arguments());
 
@@ -51,7 +54,10 @@ int main(int argc, char *argv[])
 }
 ```
 
-Please refer to the project in [examples](https://github.com/benlau/testable/tree/master/examples/testableexample) folder.
+Exampls are available at [examples](https://github.com/benlau/testable/tree/master/examples/testableexample) folder.
+
+Command Line Demonstration
+---------------------------
 
 Run all tests with function name equal to "test1"
 
