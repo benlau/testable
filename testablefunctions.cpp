@@ -78,3 +78,8 @@ void Testable::walk(QObject *object, std::function<bool (QObject *, QObject*)> p
 
     _walk(object, 0);
 }
+
+bool Testable::isCI()
+{
+    return (qgetenv("TRAVIS") == "true")  || qgetenv("APPVEYOR") == "True";
+}

@@ -28,6 +28,7 @@ DISTFILES += \
     AutomatorCreateTracker.qml \
     Dummy.qml \
     ../../README.md \
-    SnapshotSample1.qml
+    SnapshotSample1.qml \
+    ../../qpm.json
 
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
