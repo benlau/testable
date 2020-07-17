@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: '00 01 */4 * *'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v2
+    - name: Check infrastructure
+      run: |
+        qmake --version
+        nproc --all
+        echo "Done"
+      shell: bash
+    - name: Build and test (ubuntu)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        set -e
+        sudo apt-get install xvfb
+        cd $GITHUB_WORKSPACE
+        cd tests/testableunittests/
+        qmake
+        make -j `nproc --all`
+        xvfb-run --auto-servernum ./testableunittests
+        cd ../../tests/testablecmdtests
+        qmake
+        make -j `nproc --all`
+        ./run-tests.sh
+      shell: bash

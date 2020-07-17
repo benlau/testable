@@ -2,7 +2,7 @@
 #include <QEventLoop>
 #include <QTimer>
 #include <QQuickItem>
-#include <QTime>
+#include <QElapsedTimer>
 #include <QTest>
 #include <QSignalSpy>
 #include "automator.h"
@@ -151,7 +151,7 @@ QObjectList Automator::findObjects(QString objectName)
 
 bool Automator::waitExists(QString objectName, int timeout)
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     while (true) {
@@ -174,7 +174,7 @@ bool Automator::waitExists(QString objectName, int timeout)
 bool Automator::waitUntil(QObject *object, QString property, QVariant value, int timeout)
 {
     QVariant objectValue = object->property(property.toLocal8Bit().constData());
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     while (objectValue != value) {
@@ -213,7 +213,7 @@ bool Automator::waitUntilSignal(QObject *object, const char *signal, int timeout
 
 bool Automator::waitUntil(QString objectName, QString property, QVariant value, int timeout)
 {
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     QObject* object = findObject(objectName);

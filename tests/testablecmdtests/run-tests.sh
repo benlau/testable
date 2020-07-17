@@ -13,7 +13,7 @@ OUTPUT="default"
 fi
 
 echo "testable $ARG"
-./testablecmdtests $ARG | grep Totals > $OUTPUT.out 2>&1
+xvfb-run --auto-servernum ./testablecmdtests $ARG | grep Totals | sed 's/, [[:digit:]]\+ms//g' > $OUTPUT.out 2>&1
 diff -uN $SRCDIR/$OUTPUT.expected $OUTPUT.out
 }
 

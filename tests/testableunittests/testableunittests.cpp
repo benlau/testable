@@ -1,6 +1,7 @@
 #include <QtCore>
 #include <QTest>
 #include <QQmlApplicationEngine>
+#include <QElapsedTimer>
 #include <Automator>
 #include <TestRunner>
 #include "testableunittests.h"
@@ -61,7 +62,7 @@ void TestableUnitTests::automatorObtainSingletonObject()
 void TestableUnitTests::automatorWaitUntilSignal()
 {
     QTimer * timer = new QTimer(this);
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     timer->setInterval(500);
