@@ -58,10 +58,11 @@ void TestableUnitTests::automatorObtainSingletonObject()
     QObject* store = automator.obtainSingletonObject("PackageA",1,0,"Store");
     QVERIFY(store);
 }
+
 void TestableUnitTests::automatorWaitUntilSignal()
 {
     QTimer * timer = new QTimer(this);
-    QTime time;
+    QElapsedTimer time;
     time.start();
 
     timer->setInterval(500);

@@ -5,6 +5,7 @@
 #include <QQuickItem>
 #include <QPointF>
 #include <QTime>
+#include <QElapsedTimer>
 
 /// Automator provides an interface to manipulate UI object loaded by QQmlApplicationEngine
 
@@ -51,7 +52,7 @@ public:
 
     template <typename Functor>
     bool waitUntil(Functor functor, int timeout = -1) {
-        QTime time;
+        QElapsedTimer time;
         time.start();
 
         while (!functor()) {
