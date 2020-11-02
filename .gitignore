@@ -33,3 +33,9 @@ tests/quickandroidactivitytests/tests/bin/*
 tests/quickandroidactivitytests/tests/gen/*
 *.qmlc
 *.jsc
+moc_*
+tests/testablecmdtests/testablecmdtests
+tests/testableunittests/testableunittests
+tests/testablecmdtests/.qmake.stash
+tests/testablecmdtests/default.out
+*.out

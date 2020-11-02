@@ -13,7 +13,7 @@ OUTPUT="default"
 fi
 
 echo "testable $ARG"
-./testablecmdtests $ARG | grep Totals > $OUTPUT.out 2>&1
+./testablecmdtests $ARG | sed -e "s/, [0-9]*ms$//g" |grep Totals > $OUTPUT.out 2>&1
 diff -uN $SRCDIR/$OUTPUT.expected $OUTPUT.out
 }
 
