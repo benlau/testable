@@ -11,7 +11,7 @@ compiler:
 before_install:
     - export PATH=$PWD/.travis:$PATH
     - export DISPLAY=:99.0
-    - docker pull benlau:qtsdk:5.9.9
+    - docker pull benlau/qtsdk:5.9.9
 
 script:
     - sleep 3
