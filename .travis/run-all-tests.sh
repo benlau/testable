@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export DISPLAY=:99.0
 set -v
 set -e
 pushd tests/testableunittests/
