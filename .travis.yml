@@ -1,5 +1,8 @@
+sudo: required
 language : cpp
-dist: trusty
+dist: bionic
+services:
+  - docker
 env:
   - DISPLAY=:99.0
 compiler:
@@ -7,20 +10,7 @@ compiler:
 before_install:
     - export PATH=$PWD/.travis:$PATH
     - sh -e /etc/init.d/xvfb start
-    - ./.travis/qt-5.5.1
+    - docker pull benlau:qtsdk:5.9.9
 
 script:
-    - source qt-5.5.1.env
-    - export QT_DOCS_STYLE=$PWD/Qt/Docs/Qt-5.5/global/template/style/offline.css
-    - cd tests/testableunittests/
-    - qmake
-    - make
-    - ls
-    - ./testableunittests
-    - cd -
-    - cd tests/testablecmdtests
-    - qmake
-    - make
-    - bash ./run-tests.sh
-
-
+    - docker run --rm --network host -v "$PWD:/src" -t benlau/qtsdk:5.9.9 bash -c 'cd src && .travis/run-all-tests.sh'
