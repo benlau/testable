@@ -3,6 +3,7 @@ language : cpp
 dist: bionic
 services:
   - docker
+  - xvfb
 env:
   - DISPLAY=:99.0
 compiler:
@@ -13,4 +14,5 @@ before_install:
     - docker pull benlau:qtsdk:5.9.9
 
 script:
+    - sleep 3
     - docker run --rm --network host -v "$PWD:/src" -t benlau/qtsdk:5.9.9 bash -c 'cd src && .travis/run-all-tests.sh'
