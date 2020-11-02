@@ -10,7 +10,7 @@ compiler:
   - gcc
 before_install:
     - export PATH=$PWD/.travis:$PATH
-    - sh -e /etc/init.d/xvfb start
+    - export DISPLAY=:99.0
     - docker pull benlau:qtsdk:5.9.9
 
 script:
