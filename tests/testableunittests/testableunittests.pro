@@ -17,8 +17,12 @@ HEADERS += \
 
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
-
 include(../../testable.pri)
+
+!win32 {
+    message("Enable -Werror");
+    QMAKE_CXXFLAGS += -Werror
+}
 
 DISTFILES += \
     window.qml \
