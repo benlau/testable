@@ -44,7 +44,7 @@ void Automator::wait(int timeout) {
 QObject *Automator::findObject(QString objectName)
 {
     QObjectList list = findObjects(objectName);
-    QObject* res = 0;
+    QObject* res = nullptr;
 
     if (list.size() > 0) {
         res = list.first();
@@ -154,10 +154,8 @@ bool Automator::click(QQuickItem *item, int delay,  QPointF pt)
 
     QPointF hit;
     if (pt.isNull()) {
-        int w = item->width();
-        int h = item->height();
-        int cx =  w /2;
-        int cy =  h / 2;
+        int cx =  static_cast<int>(item->width()) /2;
+        int cy =  static_cast<int>(item->height()) / 2;
         hit = item->mapToScene(QPointF(cx,cy));
     } else {
         hit = item->mapToScene(pt);
@@ -173,7 +171,7 @@ bool Automator::click(QQuickItem *item, int delay,  QPointF pt)
 bool Automator::click(QQuickItem *item, QString childObjectName)
 {
     QObjectList list = findObjects(item, childObjectName);
-    QQuickItem* child = 0;
+    QQuickItem* child = nullptr;
 
     if (list.size() == 0) {
         return false;
@@ -285,7 +283,7 @@ QObject* Automator::obtainSingletonObject(QString package, int versionMajor, int
 
     QString qml = pattern.arg(package).arg(versionMajor).arg(versionMinor).arg(typeName);
 
-    QObject* holder = 0;
+    QObject* holder = nullptr;
 
     QQmlComponent comp (m_engine.data());
     comp.setData(qml.toUtf8(),QUrl());
@@ -294,7 +292,7 @@ QObject* Automator::obtainSingletonObject(QString package, int versionMajor, int
     if (!holder) {
         qWarning() << QString("Testable: Failed to gain singleton object: %1").arg(typeName);
         qWarning() << QString("Error: ") << comp.errorString();
-        return 0;
+        return nullptr;
     }
 
     QObject* object = holder->property("object").value<QObject*>();
